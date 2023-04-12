@@ -5,6 +5,7 @@ export default function ErrandsManager() {
         <>
             <main>
                 <h1>Hello</h1>
+                <LogoutButton />
             </main>
         </>
     );
