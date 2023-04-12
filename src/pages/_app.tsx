@@ -1,4 +1,3 @@
-import { NextUIProvider } from '@nextui-org/react'
 import '@/styles/globals.css'
 import type { AppProps } from 'next/app'
 import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs'
@@ -15,13 +14,11 @@ export default function App({
   const [supabaseClient] = useState(() => createBrowserSupabaseClient())
 
   return (
-    <NextUIProvider>
-      <SessionContextProvider
-        supabaseClient={supabaseClient}
-        initialSession={pageProps.initialSession}
-      >
-        <Component {...pageProps} />
-      </SessionContextProvider>
-    </NextUIProvider>
+    <SessionContextProvider
+      supabaseClient={supabaseClient}
+      initialSession={pageProps.initialSession}
+    >
+      <Component {...pageProps} />
+    </SessionContextProvider>
   )
 }

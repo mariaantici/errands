@@ -1,7 +1,6 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { login, register } from '../utils/auth';
-import { Input, Button, Card, Spacer } from '@nextui-org/react';
 import { useRouter } from 'next/router';
 
 const validationSchema = Yup.object().shape({
@@ -29,56 +28,22 @@ export default function LoginForm() {
     };
 
     return (
-        <Card>
-            <Card.Body>
-                <Formik initialValues={{ email: '', password: '' }} validationSchema={validationSchema} onSubmit={handleSubmit}>
-                    {({ isSubmitting }) => (
-                        <Form>
-                            <Field name="email">
-                                {({ field }) => (
-                                    <Input
-                                        {...field}
-                                        type="email"
-                                        label="Email"
-                                        placeholder="Enter your email"
-                                        status={field.value && field.value.length > 0 ? 'error' : 'warning'}
-                                        bordered
-                                        clearable
-                                        width="300px"
-                                    />
-                                )}
-                            </Field>
-                            <br />
-                            <div className="h-5">
-                                <ErrorMessage name="email" />
-                            </div>
-                            <Spacer y={0.5} />
-                            <Field name="password">
-                                {({ field }) => (
-                                    <Input.Password
-                                        {...field}
-                                        type="password"
-                                        label="Password"
-                                        placeholder="Enter your password"
-                                        status={field.value && field.value.length > 0 ? 'error' : 'warning'}
-                                        bordered
-                                        clearable
-                                        width="300px"
-                                    />
-                                )}
-                            </Field>
-                            <br />
-                            <div className="h-5">
-                                <ErrorMessage name="password" />
-                            </div>
-                            <Spacer y={1} />
-                            <Button type="submit" disabled={isSubmitting} color='warning' className='mx-auto'>
-                                Log in / Register
-                            </Button>
-                        </Form>
-                    )}
-                </Formik>
-            </Card.Body>
-        </Card>
+        <Formik initialValues={{ email: '', password: '' }} validationSchema={validationSchema} onSubmit={handleSubmit}>
+            {({ isSubmitting }) => (
+                <Form>
+                    <label htmlFor="email">Email</label>
+                    <Field id="email" name="email" type="email" placeholder="Enter your email" className="input" />
+                    <ErrorMessage name="email" component="div" className="error-message" />
+
+                    <label htmlFor="password">Password</label>
+                    <Field id="password" name="password" type="password" placeholder="Enter your password" className="input" />
+                    <ErrorMessage name="password" component="div" className="error-message" />
+
+                    <button type="submit" disabled={isSubmitting} className="submit-button">
+                        Log in / Register
+                    </button>
+                </Form>
+            )}
+        </Formik>
     );
 }
