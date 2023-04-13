@@ -29,3 +29,18 @@ export async function logout(): Promise<void> {
         throw error;
     }
 }
+
+export async function resetPassword(email: string): Promise<void> {
+    const { data, error } = await supabase.auth.resetPasswordForEmail(email);
+    if (error) {
+        throw error;
+    }
+}
+
+export async function updatePassword(newPassword: string): Promise<void> {
+    const { error } = await supabase.auth.updateUser({ password: newPassword });
+
+    if (error) {
+        throw error;
+    }
+}
