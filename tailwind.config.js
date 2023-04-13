@@ -7,12 +7,37 @@ module.exports = {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+      fontFamily: {
+        'montserrat': ['Montserrat', 'sans-serif'],
+        'pacifico': ['Pacifico', 'cursive'],
+      },
+      screens: {
+        'xxs': '400px',
+        'xs': '490px',
+        'sm': '640px',
+        'md': '768px',
+        'lg': '1024px',
+        'xl': '1280px',
       },
     },
   },
-  plugins: [],
+  plugins: [require("rippleui")],
+  rippleui: {
+    themes: [
+      {
+        themeName: "light",
+        colorScheme: "light",
+        colors: {
+          success: "#16a34a",
+        },
+      },
+      {
+        themeName: "dark",
+        colorScheme: "dark",
+        colors: {
+          success: "#16a34a",
+        },
+      },
+    ],
+  },
 }
