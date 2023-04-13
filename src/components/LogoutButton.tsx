@@ -7,7 +7,7 @@ export default function LogoutButton() {
     const handleClick = async () => {
         try {
             await logout();
-            router.push('/login');
+            router.push('/authentication');
         } catch (error) {
             alert(error.message);
         }

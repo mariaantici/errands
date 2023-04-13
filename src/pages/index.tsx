@@ -10,7 +10,7 @@ export default function Home() {
     if (session) {
       router.push('/errands-manager');
     } else {
-      router.push('/login');
+      router.push('/authentication');
     }
   }, [router, session]);
 
