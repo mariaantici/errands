@@ -1,9 +1,10 @@
 import { supabase } from '@/utils/supabaseClient';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { updatePassword } from '../utils/auth';
+import { AlertComponent } from './AlertComponent';
 
 const validationSchema = Yup.object().shape({
     newPassword: Yup.string()
@@ -13,6 +14,8 @@ const validationSchema = Yup.object().shape({
 
 export default function ResetPasswordForm() {
     const router = useRouter();
+    const [alert, setAlert] = useState(null);
+    const [alertKey, setAlertKey] = useState(null);
 
     useEffect(() => {
         (async () => {
@@ -26,10 +29,12 @@ export default function ResetPasswordForm() {
     async function handlePasswordReset(values, { setSubmitting }) {
         try {
             await updatePassword(values.newPassword);
-            alert('Your password has been updated successfully. Please log in with your new password.');
+            setAlert({ title: 'Success', message: 'Your password has been updated successfully. Please log in with your new password.', type: 'success' });
+            setAlertKey(Date.now());
             router.push('/authentication');
         } catch (error) {
-            alert(error.message);
+            setAlert({ title: 'Error', message: error.message, type: 'error' });
+            setAlertKey(Date.now());
         } finally {
             setSubmitting(false);
         }
@@ -37,6 +42,14 @@ export default function ResetPasswordForm() {
 
     return (
         <div className="card min-w-[340px] xs:min-w-[380px]">
+            {alert && (
+                <AlertComponent
+                    key={alertKey}
+                    title={alert.title}
+                    message={alert.message}
+                    type={alert.type}
+                />
+            )}
             <div className="card-body">
                 <h2 className="text-2xl text-center font-pacifico">Reset Password</h2>
                 <p className="mb-3 mt-[-2px] text-sm text-green-600 text-center tracking-wide">password amnesia: a modern epidemic</p>
