@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { login, register, resetPassword } from '../utils/auth';
+import { login, register, resetPassword } from '@/utils/auth';
 import { useRouter } from 'next/router';
-import { AlertComponent } from './AlertComponent';
+import { AlertComponent } from '@/components/AlertComponent';
 
 const validationSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Email is required'),

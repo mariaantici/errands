@@ -3,8 +3,8 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { updatePassword } from '../utils/auth';
-import { AlertComponent } from './AlertComponent';
+import { updatePassword } from '@/utils/auth';
+import { AlertComponent } from '../AlertComponent';
 
 const validationSchema = Yup.object().shape({
     newPassword: Yup.string()

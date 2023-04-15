@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { logout } from '../utils/auth';
+import { logout } from '@/utils/auth';
 
 export default function LogoutButton() {
     const router = useRouter();
@@ -13,5 +13,5 @@ export default function LogoutButton() {
         }
     };
 
-    return <button onClick={handleClick}>Log out</button>;
+    return <button tabIndex={-1} className="dropdown-item text-sm" onClick={handleClick}>Log out</button>;
 }
