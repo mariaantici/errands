@@ -4,6 +4,7 @@ import LogoutButton from "@/components/auth/LogoutButton";
 
 // Navbar component
 const Navbar: React.FC = () => {
+    // Render Navbar
     return (
         <div className="h-[108px]">
             <div className="navbar navbar-glass navbar-sticky max-w-[90%] lg:max-w-5xl mx-auto mt-5 rounded-xl">
