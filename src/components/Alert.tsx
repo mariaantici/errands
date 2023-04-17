@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 
-interface AlertComponentProps {
+// Define the data type for alerts
+interface Alert {
     title: string;
     message: string;
     type: 'success' | 'error' | 'info' | 'warning';
     duration?: number;
 }
 
-export const AlertComponent: React.FC<AlertComponentProps> = ({
+// Alert that displays a temporary message based on the type
+export const Alert: React.FC<Alert> = ({
     title,
     message,
     type,
@@ -25,10 +27,12 @@ export const AlertComponent: React.FC<AlertComponentProps> = ({
         };
     }, [duration]);
 
+    // Function to handle closing the alert
     function handleClose() {
         setVisible(false);
     }
 
+    // Function to render the SVG icon based on the alert type
     function renderSVG() {
         switch (type) {
             case 'success':
@@ -59,6 +63,7 @@ export const AlertComponent: React.FC<AlertComponentProps> = ({
         }
     }
 
+    // Rendering Alert
     return visible ? (
         <div className={`absolute top-10 right-20 alert alert-${type} max-w-sm`}>
             {renderSVG()}
@@ -81,4 +86,3 @@ export const AlertComponent: React.FC<AlertComponentProps> = ({
         </div>
     ) : null;
 };
-
