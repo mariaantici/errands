@@ -1,4 +1,5 @@
 import React from 'react';
+import AddErrandButton from './AddErrandButton';
 import DatePicker from './DatePicker';
 import ErrandsListForMembers from './ErrandsListForMembers';
 
@@ -14,6 +15,7 @@ const TabContent: React.FC<TabContentProps> = ({ data }) => {
         <>
             <DatePicker />
             <ErrandsListForMembers />
+            <AddErrandButton />
 
             {// Rendering sample data to show the Tabs work
             }
