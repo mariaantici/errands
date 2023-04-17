@@ -9,7 +9,7 @@ interface Alert {
 }
 
 // Alert that displays a temporary message based on the type
-const Alert: React.FC<Alert> = ({
+export const Alert: React.FC<Alert> = ({
     title,
     message,
     type,
@@ -86,5 +86,3 @@ const Alert: React.FC<Alert> = ({
         </div>
     ) : null;
 };
-
-export default Alert;

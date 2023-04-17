@@ -1,6 +1,8 @@
 import ResetPasswordForm from "@/components/auth/ResetPasswordForm";
 
-export default function ResetPassword() {
+// ResetPassword component
+const ResetPassword: React.FC = () => {
+    // Render ResetPassword
     return (
         <div className="flex items-center justify-center min-h-screen">
             <div className="m-auto">
@@ -8,4 +10,6 @@ export default function ResetPassword() {
             </div>
         </div>
     );
-}
+};
+
+export default ResetPassword;

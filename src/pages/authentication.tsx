@@ -1,6 +1,8 @@
-import AuthForm from '@/components/AuthForm';
+import AuthForm from '@/components/auth/AuthForm';
 
-export default function Authentication() {
+// Authentication component
+const Authentication: React.FC = () => {
+    // Render Authentication
     return (
         <div className="flex items-center justify-center min-h-screen">
             <div className="m-auto">
@@ -8,4 +10,6 @@ export default function Authentication() {
             </div>
         </div>
     );
-}
+};
+
+export default Authentication;
