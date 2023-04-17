@@ -109,15 +109,15 @@ const AuthForm: React.FC = () => {
                                 <div className="text-sm">
                                     <label
                                         className="font-medium text-green-600 hover:text-red-600"
-                                        htmlFor="modal-3"
+                                        htmlFor="resetPassword"
                                     >
                                         Forgot your password?
                                     </label>
-                                    <input className="modal-state" id="modal-3" type="checkbox" />
+                                    <input className="modal-state" id="resetPassword" type="checkbox" />
                                     <div className="modal">
                                         <label className="modal-overlay"></label>
                                         <div className="modal-content flex flex-col gap-2 min-w-[340px] xs:min-w-[360px]">
-                                            <label htmlFor="modal-3" className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</label>
+                                            <label htmlFor="resetPassword" className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</label>
                                             <h2 className="text-xl">Forgot your password?</h2>
                                             <p className="mb-3 mt-[-2px] text-sm text-green-600 tracking-wide">no worries, we'll send you an email to reset it</p>
                                             <label htmlFor="email" className="tracking-wide">Email</label>
@@ -126,10 +126,10 @@ const AuthForm: React.FC = () => {
                                                 <ErrorMessage name="email" />
                                             </div>
                                             <div className="flex gap-3">
-                                                <label htmlFor="modal-3" className="btn btn-success btn-block" onClick={(e) => {
+                                                <label htmlFor="resetPassword" className="btn btn-outline-success btn-block" onClick={(e) => {
                                                     handleForgotPassword(values.email);
                                                 }}>Send Email</label>
-                                                <label htmlFor="modal-3" className="btn btn-block">Cancel</label>
+                                                <label htmlFor="resetPassword" className="btn btn-block">Cancel</label>
                                             </div>
                                         </div>
                                     </div>
