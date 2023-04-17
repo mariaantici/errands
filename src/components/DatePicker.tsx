@@ -27,7 +27,7 @@ const DatePicker: React.FC = () => {
 
     // Render the DatePicker
     return (
-        <>
+        <div className="px-3 xs:px-5 md:px-8">
             <div className="overflow-auto">
                 <div className="flex flex-nowrap mb-2 sm:justify-center">
                     {months.map((month, index) => (
@@ -42,7 +42,7 @@ const DatePicker: React.FC = () => {
                 </div>
             </div>
             <div className="overflow-auto">
-                <div className="flex flex-nowrap mb-2 sm:mb-5 lg:justify-around">
+                <div className="flex flex-nowrap mb-2 sm:mb-5 md:justify-around">
                     {renderDays().map((day, index) => (
                         <span
                             key={index}
@@ -58,7 +58,7 @@ const DatePicker: React.FC = () => {
                 <h2 className="inline font-pacifico text-green-600 text-2xl">Errands </h2>
                 <h2 className="inline font-pacifico text-xl">for {selectedDay + 1} of {(months[selectedMonth])}:</h2>
             </div>
-        </>
+        </div>
     );
 };
 
