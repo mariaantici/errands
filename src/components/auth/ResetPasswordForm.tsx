@@ -4,15 +4,17 @@ import { useEffect, useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { updatePassword } from '@/utils/auth';
-import { AlertComponent } from '../AlertComponent';
+import { Alert } from '../Alert';
 
+// Define the form validation schema using Yup
 const validationSchema = Yup.object().shape({
     newPassword: Yup.string()
         .min(8, 'Password must be at least 8 characters')
         .required('New password is required'),
 });
 
-export default function ResetPasswordForm() {
+// ResetPasswordForm component
+const ResetPasswordForm: React.FC = () => {
     const router = useRouter();
     const [alert, setAlert] = useState(null);
     const [alertKey, setAlertKey] = useState(null);
@@ -26,7 +28,8 @@ export default function ResetPasswordForm() {
         })();
     }, []);
 
-    async function handlePasswordReset(values, { setSubmitting }) {
+    // Handles the password reset process
+    async function handlePasswordReset(values: { newPassword: string }, { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }) {
         try {
             await updatePassword(values.newPassword);
             setAlert({ title: 'Success', message: 'Your password has been updated successfully. Please log in with your new password.', type: 'success' });
@@ -40,10 +43,11 @@ export default function ResetPasswordForm() {
         }
     }
 
+    //Render the ResetPasswordForm
     return (
         <div className="card min-w-[340px] xs:min-w-[380px]">
             {alert && (
-                <AlertComponent
+                <Alert
                     key={alertKey}
                     title={alert.title}
                     message={alert.message}
@@ -88,3 +92,5 @@ export default function ResetPasswordForm() {
         </div>
     );
 }
+
+export default ResetPasswordForm;

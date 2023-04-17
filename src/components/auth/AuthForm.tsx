@@ -3,19 +3,28 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { login, register, resetPassword } from '@/utils/auth';
 import { useRouter } from 'next/router';
-import { AlertComponent } from '@/components/AlertComponent';
+import { Alert } from '@/components/Alert';
 
+// Define the initial form values interface
+interface InitialFormValues {
+    email: string;
+    password: string;
+}
+
+// Define the form validation schema using Yup
 const validationSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Email is required'),
     password: Yup.string().min(8, 'Password must be at least 8 characters').required('Password is required'),
 });
 
-export default function LoginForm() {
+// AuthForm component
+const AuthForm: React.FC = () => {
     const router = useRouter();
     const [alert, setAlert] = useState(null);
     const [alertKey, setAlertKey] = useState(null);
 
-    const handleSubmit = async (values, { setSubmitting }) => {
+    //Handles form submission, registers and logs in the user
+    const handleSubmit = async (values: InitialFormValues, { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }) => {
         try {
             let user = await register(values.email, values.password);
 
@@ -41,6 +50,7 @@ export default function LoginForm() {
         }
     };
 
+    //Handles the forgot password process
     async function handleForgotPassword(email: string) {
         if (email) {
             try {
@@ -54,10 +64,11 @@ export default function LoginForm() {
         }
     }
 
+    // Render the AuthForm
     return (
         <div className="card min-w-[340px] xs:min-w-[380px]">
             {alert && (
-                <AlertComponent
+                <Alert
                     key={alertKey}
                     title={alert.title}
                     message={alert.message}
@@ -135,3 +146,5 @@ export default function LoginForm() {
         </div >
     );
 }
+
+export default AuthForm;
