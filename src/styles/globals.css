@@ -11,3 +11,50 @@
       @apply text-black bg-white bg-opacity-50 ;
     }
   }
+
+/* Adding custom styles to the react date picker to override the default ones */
+
+/* Styling the background of the datepicker */
+.react-datepicker {
+  @apply bg-backgroundSecondary !important;
+}
+
+/* Styling the header background of the datepicker */
+.react-datepicker__header {
+  @apply bg-backgroundSecondary !important;
+}
+
+/* Styling the current month text in the header */
+.react-datepicker__current-month {
+  @apply text-content1 !important;
+}
+
+/* Styling the day names (Sun, Mon, Tue, etc.) */
+.react-datepicker__day-name {
+  @apply text-content1 !important;
+}
+
+/* Styling the days inside the datepicker */
+.react-datepicker__day {
+  @apply text-content1 hover:bg-green-600 !important;
+}
+
+/* Styling the current day */
+.react-datepicker__day--today {
+  @apply text-green-600 font-bold hover:text-content1 !important;
+}
+
+/* Styling the selected day */
+.react-datepicker__day--selected {
+  @apply bg-green-600 dark:bg-green-800 text-content1 !important;
+}
+
+/* Styling the default selected day when opening the datepicker */
+.react-datepicker__day--keyboard-selected {
+  @apply bg-green-600 dark:bg-green-800 text-content1 !important;
+}
+
+/* Styling the disabled days */
+.react-datepicker__day--disabled {
+  @apply cursor-not-allowed text-content3 hover:bg-content3 hover:text-content1 !important;
+}
