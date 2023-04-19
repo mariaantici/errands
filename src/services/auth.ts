@@ -1,4 +1,4 @@
-import { supabase } from './supabaseClient';
+import { supabase } from '../utils/supabaseClient';
 import { User } from '@supabase/supabase-js';
 
 // Register a new user with email and password

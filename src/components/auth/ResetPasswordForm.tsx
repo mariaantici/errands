@@ -3,8 +3,8 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { updatePassword } from '@/utils/auth';
-import { Alert } from '../Alert';
+import { updatePassword } from '@/services/auth';
+import { Alert } from '@/components/Alert';
 
 // Define the form validation schema using Yup
 const validationSchema = Yup.object().shape({

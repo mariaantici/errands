@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
+import { useRouter } from 'next/router';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { login, register, resetPassword } from '@/utils/auth';
-import { useRouter } from 'next/router';
+import { login, register, resetPassword } from '@/services/auth';
 import { Alert } from '@/components/Alert';
 
 // Define the initial form values interface

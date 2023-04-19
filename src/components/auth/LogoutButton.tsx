@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { logout } from '@/utils/auth';
+import { logout } from '@/services/auth';
 
 // LogoutButton component for logging out a user
 const LogoutButton: React.FC = () => {
