@@ -1,5 +1,5 @@
 import { useState } from "react";
-import ReactDatePicker from "./ReactDatePicker";
+import ReactDatePicker from "@/components/datepickers/ReactDatePicker";
 
 // DatePickerMobile component using ReactDatePicker
 const DatePickerMobile: React.FC = () => {

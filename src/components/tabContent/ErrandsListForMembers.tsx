@@ -1,5 +1,5 @@
 import React from "react";
-import ErrandsList from "./ErrandsList";
+import ErrandsList from "@/components/tabContent/ErrandsList";
 
 // Sample data for members
 const members: { name: string }[] = [
