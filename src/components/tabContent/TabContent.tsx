@@ -1,9 +1,9 @@
 import React from 'react';
-import DatePickerMobile from './DatePickerMobile';
-import DatePicker from './DatePicker';
-import ErrandsListForMembers from './ErrandsListForMembers';
-import AddErrandButton from './AddErrandButton';
-import RecommendedErrands from './RecommendedErrands';
+import DatePickerMobile from '@/components/datepickers/DatePickerMobile';
+import DatePicker from '@/components/datepickers/DatePicker';
+import ErrandsListForMembers from '@/components/tabContent/ErrandsListForMembers';
+import AddErrandButton from '@/components/tabContent/AddErrandButton';
+import RecommendedErrands from '@/components/tabContent/RecommendedErrands';
 
 // Define the props for the TabContent component
 interface TabContentProps {

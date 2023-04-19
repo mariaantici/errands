@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ReactDatePicker from './ReactDatePicker';
+import ReactDatePicker from '@/components/datepickers/ReactDatePicker';
 
 // AddErrandForm component
 const AddErrandForm: React.FC<{ modalId: string }> = ({ modalId }) => {

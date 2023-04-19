@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Tabs from "@/components/Tabs";
-import TabContent from "@/components/TabContent";
+import TabContent from "@/components/tabContent/TabContent";
 
 // Sample data for the tabs
 const data: { [key: string]: string[] } = {
