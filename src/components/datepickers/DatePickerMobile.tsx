@@ -18,7 +18,7 @@ const DatePickerMobile: React.FC = () => {
                     />
                 </div>
             </div>
-            <div className="text-center mt-3 mb-5">
+            <div className="md:hidden text-center mt-3 mb-5">
                 <h2 className="inline font-pacifico text-green-600 text-2xl">Errands </h2>
                 <h2 className="inline font-pacifico text-xl">for {startDate && startDate.toLocaleString('en-US', { day: 'numeric', month: 'long' })}:</h2>
             </div>
