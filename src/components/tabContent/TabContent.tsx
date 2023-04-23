@@ -16,7 +16,7 @@ const TabContent: React.FC<TabContentProps> = ({ data }) => {
     // Render the TabContent
     return (
         <>
-            < DatePickerMobile />
+            <DatePickerMobile />
             <DatePicker />
             <ErrandsListForMembers />
             <AddErrandButton />
