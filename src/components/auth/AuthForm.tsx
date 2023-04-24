@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { login, register, resetPassword } from '@/services/auth';
+import { createUser } from '@/services/database/users';
 import { Alert } from '@/components/Alert';
 
 // Form validation schema using Yup
@@ -25,10 +26,19 @@ const AuthForm: React.FC = () => {
             // Try to register the user
             const user = await register(values.email, values.password);
 
-            // If registration is successful, login and redirect to errands-manager
+            // If registration is successful, login, create user in users table and redirect to errands-manager
             if (user) {
                 try {
-                    const data = await login(values.email, values.password);
+                    let userId = await login(values.email, values.password);
+                    console.log(userId)
+
+                    // Create the user in users table
+                    try {
+                        await createUser(userId);
+                    } catch (error) {
+                        alert(error.message);
+                    }
+
                     router.push('/errands-manager');
                 } catch (error) {
                     let alertType = 'error';
