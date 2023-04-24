@@ -5,13 +5,7 @@ import * as Yup from 'yup';
 import { login, register, resetPassword } from '@/services/auth';
 import { Alert } from '@/components/Alert';
 
-// Define the initial form values interface
-interface InitialFormValues {
-    email: string;
-    password: string;
-}
-
-// Define the form validation schema using Yup
+// Form validation schema using Yup
 const validationSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Email is required'),
     password: Yup.string().min(8, 'Password must be at least 8 characters').required('Password is required'),
@@ -19,33 +13,49 @@ const validationSchema = Yup.object().shape({
 
 // AuthForm component
 const AuthForm: React.FC = () => {
-    const router = useRouter();
     const [alert, setAlert] = useState(null);
     const [alertKey, setAlertKey] = useState(null);
 
-    //Handles form submission, registers and logs in the user
-    const handleSubmit = async (values: InitialFormValues, { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }) => {
-        try {
-            let user = await register(values.email, values.password);
+    const router = useRouter()
 
-            if (!user || user.last_sign_in_at !== user.created_at) {
-                user = await login(values.email, values.password);
-            }
+    //Handles form submission, registers and/or logs in the user
+    const handleSubmit = async (values: { email: string, password: string }, { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }) => {
+
+        try {
+            // Try to register the user
+            const user = await register(values.email, values.password);
+
+            // If registration is successful, login and redirect to errands-manager
             if (user) {
-                router.push('/errands-manager');
+                try {
+                    const data = await login(values.email, values.password);
+                    router.push('/errands-manager');
+                } catch (error) {
+                    let alertType = 'error';
+                    setAlert({ title: 'Error', message: error.message, type: alertType });
+                    setAlertKey(Date.now());
+                }
             }
         } catch (error) {
             let alertType = 'error';
 
-            if (error.message === 'Email not confirmed') {
-                alertType = 'warning';
-                error.message = 'Please check your email and confirm your account to proceed';
+            // If the user is already registered, attempt to login
+            if (error?.message === 'User already registered') {
+                try {
+                    const data = await login(values.email, values.password);
+                    router.push('/errands-manager');
+                } catch (error) {
+                    let alertType = 'error';
+                    setAlert({ title: 'Error', message: error.message, type: alertType });
+                    setAlertKey(Date.now());
+                }
+            } else {
+                // If there's a different error, display it
+                setAlert({ title: 'Error', message: error.message, type: alertType });
+                setAlertKey(Date.now());
             }
-
-            setAlert({ title: alertType === 'warning' ? 'Warning' : 'Error', message: error.message, type: alertType });
-            setAlertKey(Date.now());
-
         } finally {
+            // Set submitting state to false
             setSubmitting(false);
         }
     };
@@ -53,6 +63,7 @@ const AuthForm: React.FC = () => {
     //Handles the forgot password process
     async function handleForgotPassword(email: string) {
         if (email) {
+            // Send reset password email to user
             try {
                 await resetPassword(email);
                 setAlert({ title: 'Success', message: 'Password recovery email has been sent. Please check your email.', type: 'success' });
@@ -76,20 +87,20 @@ const AuthForm: React.FC = () => {
                 />
             )}
             <div className="card-body">
-                <h2 className="text-2xl text-center font-pacifico">Sing in or Sign up</h2>
+                <h2 className="text-2xl text-center font-pacifico">Sign in or Sign up</h2>
                 <p className="mb-3 mt-[-2px] text-sm text-green-600 text-center tracking-wide">we'll sort it out either way</p>
                 <Formik initialValues={{ email: '', password: '' }} validationSchema={validationSchema} onSubmit={handleSubmit}>
                     {({ isSubmitting, values }) => (
                         <Form>
                             <label htmlFor="email" className="tracking-wide">Email</label>
                             <Field id="email" name="email" type="email" placeholder="Enter your email" className="input my-1" />
-                            <div className='h-7 text-xs text-red-600'>
+                            <div className="h-7 text-xs text-red-600">
                                 <ErrorMessage name="email" />
                             </div>
 
                             <label htmlFor="password" className="tracking-wide">Password</label>
                             <Field id="password" name="password" type="password" placeholder="Enter your password" className="input" />
-                            <div className='h-8 text-xs text-red-600'>
+                            <div className="h-8 text-xs text-red-600">
                                 <ErrorMessage name="password" />
                             </div>
 
@@ -122,7 +133,7 @@ const AuthForm: React.FC = () => {
                                             <p className="mb-3 mt-[-2px] text-sm text-green-600 tracking-wide">no worries, we'll send you an email to reset it</p>
                                             <label htmlFor="email" className="tracking-wide">Email</label>
                                             <Field id="recoverEmail" name="email" type="email" placeholder="Enter your email" className="input my-1" />
-                                            <div className='h-7 text-xs text-red-600'>
+                                            <div className="h-7 text-xs text-red-600">
                                                 <ErrorMessage name="email" />
                                             </div>
                                             <div className="flex gap-3">
@@ -137,7 +148,7 @@ const AuthForm: React.FC = () => {
                             </div>
 
                             <button type="submit" disabled={isSubmitting} className="btn btn-outline-success w-full tracking-wider">
-                                Sing in or Sign up
+                                Sign in or Sign up
                             </button>
                         </Form>
                     )}
