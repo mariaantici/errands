@@ -14,6 +14,7 @@ const validationSchema = Yup.object().shape({
 
 // AuthForm component
 const AuthForm: React.FC = () => {
+    // State to handle the alerts
     const [alert, setAlert] = useState(null);
     const [alertKey, setAlertKey] = useState(null);
 
@@ -36,7 +37,9 @@ const AuthForm: React.FC = () => {
                     try {
                         await createUser(userId);
                     } catch (error) {
-                        alert(error.message);
+                        let alertType = 'error';
+                        setAlert({ title: 'Error', message: error.message, type: alertType });
+                        setAlertKey(Date.now());
                     }
 
                     router.push('/errands-manager');
