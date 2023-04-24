@@ -1,4 +1,3 @@
-import { useState } from "react";
 import ReactDatePicker from "@/components/datepickers/ReactDatePicker";
 
 // DatePickerMobile component using ReactDatePicker
@@ -15,6 +14,7 @@ const DatePickerMobile: React.FC<{ selectedDate: Date | null; setSelectedDate: (
                     <ReactDatePicker className="input mb-3 w-[108px]"
                         selected={selectedDate}
                         onChange={(date) => setSelectedDate(date)}
+                        minDate={null}
                     />
                 </div>
             </div>
