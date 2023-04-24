@@ -2,14 +2,8 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHouse, faBriefcase, faListCheck, faPlane } from '@fortawesome/free-solid-svg-icons';
 
-// Define the props for the Tabs component
-interface TabsProps {
-    onTabChange: (tabKey: string) => void;
-    activeTab: string;
-}
-
 // Tabs component
-const Tabs: React.FC<TabsProps> = ({ onTabChange, activeTab }) => {
+const Tabs: React.FC<{ onTabChange: (tabKey: string) => void, activeTab: string }> = ({ onTabChange, activeTab }) => {
     // Function to handle click events on tabs
     const handleClick = (key: string) => {
         onTabChange(key);
