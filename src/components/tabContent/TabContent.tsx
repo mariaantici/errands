@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { getUser } from '@/services/database/users';
 import DatePickerMobile from '@/components/datepickers/DatePickerMobile';
 import DatePicker from '@/components/datepickers/DatePicker';
 import ShowSelectedDate from './ShowSelectedDate';
@@ -7,7 +8,7 @@ import AddErrandButton from '@/components/tabContent/AddErrandButton';
 import RecommendedErrands from '@/components/tabContent/RecommendedErrands';
 
 // TabContent component
-const TabContent: React.FC<{ list: string }> = ({ list }) => {
+const TabContent: React.FC<{ list: string, userId: string }> = ({ list, userId }) => {
     // Set state for managing the selected date across the components
     const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
 
@@ -18,7 +19,7 @@ const TabContent: React.FC<{ list: string }> = ({ list }) => {
             <DatePicker selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
             <ShowSelectedDate date={selectedDate} />
             <ErrandsListsForUser />
-            <AddErrandButton />
+            <AddErrandButton userId={userId} />
             <RecommendedErrands />
 
             {// Rendering sample data to show the Tabs work
