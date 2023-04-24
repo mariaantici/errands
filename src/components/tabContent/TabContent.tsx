@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import DatePickerMobile from '@/components/datepickers/DatePickerMobile';
 import DatePicker from '@/components/datepickers/DatePicker';
 import ShowSelectedDate from './ShowSelectedDate';
-import ErrandsListForMembers from '@/components/tabContent/ErrandsListForMembers';
+import ErrandsListsForUser from '@/components/tabContent/ErrandsListsForUser';
 import AddErrandButton from '@/components/tabContent/AddErrandButton';
 import RecommendedErrands from '@/components/tabContent/RecommendedErrands';
 
@@ -17,7 +17,7 @@ const TabContent: React.FC<{ list: string }> = ({ list }) => {
             <DatePickerMobile selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
             <DatePicker selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
             <ShowSelectedDate date={selectedDate} />
-            <ErrandsListForMembers />
+            <ErrandsListsForUser />
             <AddErrandButton />
             <RecommendedErrands />
 

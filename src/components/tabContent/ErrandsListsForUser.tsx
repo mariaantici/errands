@@ -9,9 +9,9 @@ const members: { name: string }[] = [
     { name: 'John' },
 ];
 
-// ErrandsListForMembers component
-const ErrandsListForMembers: React.FC = () => {
-    // Render the ErrandsListForMembers
+// ErrandsListsForUser component
+const ErrandsListsForUser: React.FC = () => {
+    // Render the ErrandsListsForUser
     return (
         <>
             <div className="flex flex-row flex-wrap lg:flex-nowrap justify-center items-stretch">
@@ -34,4 +34,4 @@ const ErrandsListForMembers: React.FC = () => {
     );
 };
 
-export default ErrandsListForMembers;
+export default ErrandsListsForUser;
