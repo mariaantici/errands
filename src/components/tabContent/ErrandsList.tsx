@@ -1,23 +1,29 @@
 // Sample data for errands
-const errands: { name: string; status: boolean }[] = [
-    { name: 'Trash', status: false },
-    { name: 'Laundry', status: false },
-    { name: 'Dishes', status: false },
-    { name: 'Groceries', status: false },
-    { name: 'Vacuum', status: false },
+const errands: { name: string; state: boolean }[] = [
+    { name: 'Trash', state: false },
+    { name: 'Laundry', state: true },
+    { name: 'Dishes', state: false },
+    { name: 'Groceries', state: true },
+    { name: 'Vacuum', state: false },
 ];
 
 // ErrandsList component
-const ErrandsList: React.FC = () => {
+const ErrandsList: React.FC<{ status: boolean }> = ({ status }) => {
     // Render the ErrandsList
     return (
         <div>
-            {errands.map(({ name, status }, index) => (
-                <div className="block  my-1" key={index}>
-                    <input type="checkbox" className="checkbox checkbox-bordered-success checkbox-md" />
-                    <span className="text-md ml-2 tracking-tight">{name}</span>
-                </div>
-            ))}
+            {errands.map(({ name, state }, index) => {
+                // Render only the errands that match the status prop
+                if (state === status) {
+                    return (
+                        <div className="block my-1" key={index}>
+                            <input type="checkbox" className="checkbox checkbox-bordered-success checkbox-md" />
+                            <span className="text-md ml-2 tracking-tight">{name}</span>
+                        </div>
+                    );
+                }
+                return null;
+            })}
         </div>
     );
 };
