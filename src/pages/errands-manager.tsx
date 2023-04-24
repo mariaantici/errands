@@ -5,6 +5,7 @@ import TabContent from "@/components/tabContent/TabContent";
 import InputName from "@/components/InputName";
 import { getUser } from "@/services/database/users";
 import { useRouter } from 'next/router';
+import { Alert } from '@/components/Alert';
 
 // ErrandsManager component
 const ErrandsManager: React.FC = () => {
@@ -13,6 +14,10 @@ const ErrandsManager: React.FC = () => {
 
     // State to handle modal visibility
     const [isOpen, setIsOpen] = useState<boolean>(false);
+
+    // State to handle the alerts
+    const [alert, setAlert] = useState(null);
+    const [alertKey, setAlertKey] = useState(null);
 
     const router = useRouter()
 
@@ -30,6 +35,10 @@ const ErrandsManager: React.FC = () => {
             } catch (error) {
                 // If the session doesn't exist, navigate to the authentication page
                 router.push('/authentication');
+
+                // Manage errors
+                setAlert({ title: 'Error', message: error.message, type: 'error' });
+                setAlertKey(Date.now());
             }
         };
 
@@ -39,6 +48,14 @@ const ErrandsManager: React.FC = () => {
     // Render the ErrandsManager
     return (
         <>
+            {alert && (
+                <Alert
+                    key={alertKey}
+                    title={alert.title}
+                    message={alert.message}
+                    type={alert.type}
+                />
+            )}
             <Navbar />
             <main className="max-w-5xl mx-auto">
                 <InputName isOpen={isOpen} />
