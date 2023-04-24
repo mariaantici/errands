@@ -1,10 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { updateUser } from "@/services/database/users";
 
 // InputName component
-const InputName: React.FC<{ modalId: string }> = ({ modalId }) => {
+const InputName: React.FC<{ isOpen?: boolean }> = ({ isOpen = false }) => {
     // State to handle the input value of the name field
     const [name, setName] = useState("");
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(isOpen);
+
+    useEffect(() => {
+        setIsModalOpen(isOpen);
+    }, [isOpen]);
 
     // Function to update the user's name, called on form submit
     const updateName = async (event: React.FormEvent) => {
@@ -15,13 +20,15 @@ const InputName: React.FC<{ modalId: string }> = ({ modalId }) => {
         } catch (error) {
             console.error("Error updating name", error);
         }
+        setIsModalOpen(false);
     };
 
     // Render InputName
     return (
         <>
-            <input className="modal-state" id={modalId} type="checkbox" />
-            <div className="modal">
+            {isModalOpen && (
+                <input className="modal-state" id="modalId" type="checkbox" defaultChecked />
+            )}            <div className="modal">
                 <label className="modal-overlay"></label>
                 <form onSubmit={updateName}>
                     <div className="modal-content flex flex-col gap-5 min-w-[340px] xs:min-w-[360px]">
