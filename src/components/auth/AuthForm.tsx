@@ -4,6 +4,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { login, register, resetPassword } from '@/services/auth';
 import { createUser } from '@/services/database/users';
+import { createDefaultListsForUser } from '@/services/database/lists'
 import { Alert } from '@/components/Alert';
 
 // Form validation schema using Yup
@@ -27,7 +28,7 @@ const AuthForm: React.FC = () => {
             // Try to register the user
             const user = await register(values.email, values.password);
 
-            // If registration is successful, login, create user in users table and redirect to errands-manager
+            // If registration is successful, login, create user in users table, create default lists for user and redirect to errands-manager
             if (user) {
                 try {
                     let userId = await login(values.email, values.password);
@@ -36,6 +37,15 @@ const AuthForm: React.FC = () => {
                     // Create the user in users table
                     try {
                         await createUser(userId);
+                    } catch (error) {
+                        let alertType = 'error';
+                        setAlert({ title: 'Error', message: error.message, type: alertType });
+                        setAlertKey(Date.now());
+                    }
+
+                    // Create the default lists for newly registered user
+                    try {
+                        await createDefaultListsForUser(userId);
                     } catch (error) {
                         let alertType = 'error';
                         setAlert({ title: 'Error', message: error.message, type: alertType });
