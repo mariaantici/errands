@@ -19,6 +19,9 @@ const ErrandsManager: React.FC = () => {
     const [alert, setAlert] = useState(null);
     const [alertKey, setAlertKey] = useState(null);
 
+    // State for saving the user's id
+    const [userId, setUserId] = useState(null);
+
     const router = useRouter()
 
     useEffect(() => {
@@ -27,7 +30,7 @@ const ErrandsManager: React.FC = () => {
             // Check if the user exists in the users table
             try {
                 const user = await getUser();
-                console.log(user);
+                setUserId(user.id);
 
                 if (!user.name) {
                     setIsOpen(true); // Open the modal for new users
@@ -60,7 +63,7 @@ const ErrandsManager: React.FC = () => {
             <main className="max-w-5xl mx-auto">
                 <InputName isOpen={isOpen} />
                 <Tabs onTabChange={setActiveTab} activeTab={activeTab} />
-                <TabContent list={activeTab} />
+                <TabContent list={activeTab} userId={userId} />
             </main>
         </>
     );
