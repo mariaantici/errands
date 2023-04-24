@@ -1,5 +1,5 @@
 import { supabase } from '@/utils/supabaseClient';
-import { User } from '@supabase/supabase-js';
+import { User, Session } from '@supabase/supabase-js';
 
 // Register a new user with email and password
 export async function register(email: string, password: string): Promise<User | null> {
@@ -14,7 +14,7 @@ export async function register(email: string, password: string): Promise<User | 
             supabase.auth.setSession(data.session);
         }
 
-        return data?.user;
+        return (data?.user);
 
     } catch (error) {
         console.error('Error registering user:', error);
@@ -23,7 +23,7 @@ export async function register(email: string, password: string): Promise<User | 
 }
 
 // Log in an existing user with email and password
-export async function login(email: string, password: string): Promise<User | null> {
+export async function login(email: string, password: string): Promise<{} | null> {
     try {
         const { data, error } = await supabase.auth.signInWithPassword({ email, password });
 
@@ -31,10 +31,27 @@ export async function login(email: string, password: string): Promise<User | nul
             throw error;
         }
 
-        return data?.user;
+        return data;
 
     } catch (error) {
         console.error('Error logging in user:', error);
+        throw error;
+    }
+}
+
+// Get session for authenticated user
+export async function getSession(): Promise<Session> {
+    try {
+        const { data: { session }, error } = await supabase.auth.getSession()
+
+        if (error) {
+            throw error;
+        }
+
+        return session;
+
+    } catch (error) {
+        console.error('Error fetching the session', error);
         throw error;
     }
 }
