@@ -10,13 +10,11 @@ interface ReactDatePickerProps {
     onChange: (date: Date | null) => void;
     className?: string;
     placeholder?: string;
+    minDate?: Date | null;
 }
 
 // ReactDatePicker component
-const ReactDatePicker: React.FC<ReactDatePickerProps> = ({ selected, onChange, className, placeholder }) => {
-    // Get the current date to disable all the days before the current day
-    const currentDate = new Date();
-
+const ReactDatePicker: React.FC<ReactDatePickerProps> = ({ selected, onChange, className, placeholder, minDate = new Date() }) => {
     //Render ReactDatePicker
     return (
         <DatePicker
@@ -24,7 +22,7 @@ const ReactDatePicker: React.FC<ReactDatePickerProps> = ({ selected, onChange, c
             placeholderText={placeholder}
             selected={selected}
             onChange={onChange}
-            minDate={currentDate}
+            minDate={minDate}
         />
     );
 };
