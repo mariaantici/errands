@@ -19,17 +19,9 @@ export async function getUserData(): Promise<SupabaseUser | null> {
     }
 }
 
-// Create new user using the Supabase's auth.users id 
-export async function createUser(): Promise<void> {
+// Create new user in users table based on the user's id
+export async function createUser(userId: string): Promise<void> {
     try {
-        // Fetch the user's data from Supabase
-        const user = await getUserData();
-        let userId: string;
-
-        if (user) {
-            userId = user.id;
-        }
-
         const { error } = await supabase
             .from('users')
             .insert({ id: userId });
