@@ -65,7 +65,7 @@ export const Alert: React.FC<Alert> = ({
 
     // Rendering Alert
     return visible ? (
-        <div className={`absolute top-10 right-20 alert alert-${type} max-w-sm`}>
+        <div className={`absolute top-20 right-7 xs:right-10 alert alert-${type} max-w-xs sm:max-w-sm`}>
             {renderSVG()}
             <div className="flex w-full justify-between">
                 <div className="flex flex-col">
