@@ -5,13 +5,8 @@ import ErrandsListForMembers from '@/components/tabContent/ErrandsListForMembers
 import AddErrandButton from '@/components/tabContent/AddErrandButton';
 import RecommendedErrands from '@/components/tabContent/RecommendedErrands';
 
-// Define the props for the TabContent component
-interface TabContentProps {
-    data: string[];
-}
-
 // TabContent component
-const TabContent: React.FC<TabContentProps> = ({ data }) => {
+const TabContent: React.FC<{ list: string }> = ({ list }) => {
 
     // Render the TabContent
     return (
@@ -24,9 +19,7 @@ const TabContent: React.FC<TabContentProps> = ({ data }) => {
 
             {// Rendering sample data to show the Tabs work
             }
-            {data.map((item, index) => (
-                <p key={index}>{item}</p>
-            ))}
+            <p key={list}>{list}</p>
         </>
     );
 };
