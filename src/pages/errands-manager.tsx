@@ -4,14 +4,7 @@ import Tabs from "@/components/Tabs";
 import TabContent from "@/components/tabContent/TabContent";
 import InputName from "@/components/InputName";
 import { getUser } from "@/services/database/users";
-
-// Sample data for the tabs
-const data: { [key: string]: string[] } = {
-    all: ['Item 1', 'Item 2', 'Item 3'],
-    household: ['Household 1', 'Household 2', 'Household 3'],
-    trip: ['Trip 1', 'Trip 2', 'Trip 3'],
-    workplace: ['Workplace 1', 'Workplace 2', 'Workplace 3'],
-};
+import { useRouter } from 'next/router';
 
 // ErrandsManager component
 const ErrandsManager: React.FC = () => {
@@ -21,8 +14,9 @@ const ErrandsManager: React.FC = () => {
     // State to handle modal visibility
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
-    useEffect(() => {
+    const router = useRouter()
 
+    useEffect(() => {
         // Check if a name exists for a user in the users table, if not it will create the user and open the modal
         async function checkUserName() {
             // Check if the user exists in the users table
@@ -34,7 +28,8 @@ const ErrandsManager: React.FC = () => {
                     setIsOpen(true); // Open the modal for new users
                 }
             } catch (error) {
-                alert(error.message);
+                // If the session doesn't exist, navigate to the authentication page
+                router.push('/authentication');
             }
         };
 
@@ -48,7 +43,7 @@ const ErrandsManager: React.FC = () => {
             <main className="max-w-5xl mx-auto">
                 <InputName isOpen={isOpen} />
                 <Tabs onTabChange={setActiveTab} activeTab={activeTab} />
-                <TabContent data={data[activeTab]} />
+                <TabContent list={activeTab} />
             </main>
         </>
     );
