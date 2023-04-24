@@ -6,10 +6,13 @@ const months: string[] = [
 ];
 
 // DatePicker component
-const DatePicker: React.FC = () => {
-    const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
-    const [selectedDay, setSelectedDay] = useState(new Date().getDate() - 1);
-    const [selectedYear] = useState(new Date().getFullYear());
+const DatePicker: React.FC<{ selectedDate: Date | null; setSelectedDate: (date: Date | null) => void }> = ({
+    selectedDate,
+    setSelectedDate,
+}) => {
+    const [selectedMonth, setSelectedMonth] = useState(selectedDate ? selectedDate.getMonth() : new Date().getMonth());
+    const [selectedDay, setSelectedDay] = useState(selectedDate ? selectedDate.getDate() - 1 : new Date().getDate() - 1);
+    const [selectedYear, setSelectedYear] = useState(selectedDate ? selectedDate.getFullYear() : new Date().getFullYear());
 
     // Function to calculate days in a given month and year
     const daysInMonth = (month: number, year: number): number => {
@@ -25,6 +28,18 @@ const DatePicker: React.FC = () => {
         return days;
     };
 
+    // Function to handle month changes
+    const handleMonthChange = (index: number) => {
+        setSelectedMonth(index);
+        setSelectedDate(new Date(selectedYear, index, selectedDay + 1));
+    };
+
+    // Function to handle day changes
+    const handleDayChange = (index: number) => {
+        setSelectedDay(index);
+        setSelectedDate(new Date(selectedYear, selectedMonth, index + 1));
+    };
+
     // Render the DatePicker
     return (
         <div className="hidden md:block px-8">
@@ -34,7 +49,7 @@ const DatePicker: React.FC = () => {
                         <span
                             key={index}
                             className={`cursor-pointer px-2 text-md ${index === selectedMonth ? 'text-green-600 font-bold' : ''}`}
-                            onClick={() => setSelectedMonth(index)}
+                            onClick={() => handleMonthChange(index)}
                         >
                             {month.slice(0, 3).toUpperCase()}
                         </span>
@@ -47,16 +62,12 @@ const DatePicker: React.FC = () => {
                         <span
                             key={index}
                             className={`cursor-pointer px-2 text-sm ${index === selectedDay ? 'text-green-600 font-bold' : ''}`}
-                            onClick={() => setSelectedDay(index)}
+                            onClick={() => handleDayChange(index)}
                         >
                             {day}
                         </span>
                     ))}
                 </div>
-            </div>
-            <div className="text-center mt-3 mb-5">
-                <h2 className="inline font-pacifico text-green-600 text-2xl">Errands </h2>
-                <h2 className="inline font-pacifico text-xl">for {selectedDay + 1} of {(months[selectedMonth])}:</h2>
             </div>
         </div>
     );
