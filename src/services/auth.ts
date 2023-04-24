@@ -23,7 +23,7 @@ export async function register(email: string, password: string): Promise<User | 
 }
 
 // Log in an existing user with email and password
-export async function login(email: string, password: string): Promise<{} | null> {
+export async function login(email: string, password: string): Promise<string | null> {
     try {
         const { data, error } = await supabase.auth.signInWithPassword({ email, password });
 
@@ -31,7 +31,7 @@ export async function login(email: string, password: string): Promise<{} | null>
             throw error;
         }
 
-        return data;
+        return data.user.id;
 
     } catch (error) {
         console.error('Error logging in user:', error);
