@@ -4,10 +4,10 @@ import { Alert } from '@/components/Alert';
 import ReactDatePicker from '@/components/datepickers/ReactDatePicker';
 
 // AddErrandForm component
-const AddErrandForm: React.FC<{ modalId: string, userId: string }> = ({ modalId, userId }) => {
+const AddErrandForm: React.FC<{ modalId: string, userId: string, recommendedName?: string }> = ({ modalId, userId, recommendedName = "" }) => {
 
     // State to handle the input value of the name field
-    const [name, setName] = useState("");
+    const [name, setName] = useState(recommendedName);
 
     // State for managing the selected list
     const [list, setList] = useState("household")
@@ -24,7 +24,7 @@ const AddErrandForm: React.FC<{ modalId: string, userId: string }> = ({ modalId,
 
     // Function to reset the form
     const resetForm = () => {
-        setName("");
+        setName(recommendedName || "");
         setDate(null);
     };
 
