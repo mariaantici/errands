@@ -20,7 +20,7 @@ const TabContent: React.FC<{ list: string, userId: string }> = ({ list, userId }
             <ShowSelectedDate date={selectedDate} />
             <ErrandsListsForUser />
             <AddErrandButton userId={userId} />
-            <RecommendedErrands />
+            <RecommendedErrands userId={userId} />
 
             {// Rendering sample data to show the Tabs work
             }
