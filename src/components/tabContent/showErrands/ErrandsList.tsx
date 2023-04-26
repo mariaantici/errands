@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { updateErrandStatus } from "@/services/database/errands";
-import { Alert } from "../Alert";
+import { Alert } from "@/components/Alert";
 
 // ErrandsList component
 const ErrandsList: React.FC<{ errands: any[] }> = ({ errands }) => {
@@ -12,7 +12,6 @@ const ErrandsList: React.FC<{ errands: any[] }> = ({ errands }) => {
     async function updateErrand(errandId: string, statusValue: boolean) {
         try {
             await updateErrandStatus(errandId, statusValue);
-
         } catch (error) {
             setAlert({ title: 'Error', message: error.message, type: 'error' });
             setAlertKey(Date.now());

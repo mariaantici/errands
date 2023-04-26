@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { getUser } from '@/services/database/users';
+import React, { useState } from 'react';
 import DatePickerMobile from '@/components/datepickers/DatePickerMobile';
 import DatePicker from '@/components/datepickers/DatePicker';
 import ShowSelectedDate from './ShowSelectedDate';
-import ErrandsListsForUser from '@/components/tabContent/ErrandsListsForUser';
-import AddErrandButton from '@/components/tabContent/AddErrandButton';
-import RecommendedErrands from '@/components/tabContent/RecommendedErrands';
+import ErrandsListsForUser from '@/components/tabContent/showErrands/ErrandsListsForUser';
+import AddErrandButton from '@/components/tabContent/addErrands/AddErrandButton';
+import RecommendedErrands from '@/components/tabContent/addErrands/RecommendedErrands';
 
 // TabContent component
 const TabContent: React.FC<{ list: string }> = ({ list }) => {

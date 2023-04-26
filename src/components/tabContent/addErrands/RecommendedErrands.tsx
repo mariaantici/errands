@@ -1,5 +1,5 @@
 import React from "react";
-import AddErrandForm from "./AddErrandForm";
+import AddErrandForm from "@/components/tabContent/addErrands/AddErrandForm";
 
 // List of sample errands
 const recommendedErrands: string[] = ['Buy groceries', 'Do laundry', 'Wash dishes', 'Take out the trash', 'Vacuum the floor', 'Clean the bathroom', 'Make the bed', 'Cook a meal', 'Water the plants', 'Pay bills', 'Wash the car', 'Walk the dog', 'Change light bulbs', 'Dust the furniture', 'Clean the windows', 'Iron clothes', 'Mop the floor', 'Check the mail', 'Replace air filters', 'Wash bedding', 'Clean the refrigerator', 'Organize the pantry', 'Sweep the porch', 'Clean the oven', 'Trim the lawn', 'Rake leaves', 'Shovel snow', 'Clean the gutters', 'Wipe down countertops', 'Declutter a room']

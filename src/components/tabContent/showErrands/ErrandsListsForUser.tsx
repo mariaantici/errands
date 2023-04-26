@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import UserIdContext from "@/contexts/UserIdContext";
 import { Alert } from "@/components/Alert";
 import { getErrands } from "@/services/database/errands"
-import ErrandsList from "@/components/tabContent/ErrandsList";
+import ErrandsList from "@/components/tabContent/showErrands/ErrandsList";
 
 // ErrandsListsForUser component
 const ErrandsListsForUser: React.FC<{ list: string, date: Date }> = ({ list, date }) => {
@@ -42,12 +42,12 @@ const ErrandsListsForUser: React.FC<{ list: string, date: Date }> = ({ list, dat
                 setAlertKey(Date.now());
             }
         };
-
         if (userId) {
             fetchErrands();
         }
     }, [userId, formattedDate]);
 
+    // Filter errands
     const filteredErrands = filterErrandsByList(errandsData, list);
 
     // Render the ErrandsListsForUser

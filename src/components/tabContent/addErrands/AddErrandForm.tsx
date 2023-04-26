@@ -51,7 +51,6 @@ const AddErrandForm: React.FC<{ modalId: string, recommendedName?: string }> = (
             setAlert({ title: 'Error', message: error.message, type: 'error' });
             setAlertKey(Date.now());
         }
-
         // Close modal only if the name has a certain length
         if (name.length > 1) {
             setModalVisible(false);
