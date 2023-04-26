@@ -18,13 +18,9 @@ const TabContent: React.FC<{ list: string, userId: string }> = ({ list, userId }
             <DatePickerMobile selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
             <DatePicker selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
             <ShowSelectedDate date={selectedDate} />
-            <ErrandsListsForUser />
+            <ErrandsListsForUser list={list} userId={userId} date={selectedDate} />
             <AddErrandButton userId={userId} />
             <RecommendedErrands userId={userId} />
-
-            {// Rendering sample data to show the Tabs work
-            }
-            <p key={list}>{list}</p>
         </>
     );
 };
