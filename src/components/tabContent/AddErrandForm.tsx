@@ -22,6 +22,14 @@ const AddErrandForm: React.FC<{ modalId: string, userId: string, recommendedName
     // State for managing modal visibility
     const [modalVisible, setModalVisible] = useState(false);
 
+    // Convert a local date to a UTC date without timezone offset.
+    function toUTCDate(date: Date): Date {
+        const year = date.getFullYear();
+        const month = date.getMonth();
+        const day = date.getDate();
+        return new Date(Date.UTC(year, month, day));
+    }
+
     // Function to reset the form
     const resetForm = () => {
         setName(recommendedName || "");
@@ -31,8 +39,9 @@ const AddErrandForm: React.FC<{ modalId: string, userId: string, recommendedName
     // Function to create new errand, called on form submit
     const addErrand = async (event: React.FormEvent) => {
         event.preventDefault();
+        const utcDate = date ? toUTCDate(date) : null;
         try {
-            await createErrand(userId, list, name, date);
+            await createErrand(userId, list, name, utcDate);
             setAlert({ title: 'Success', message: 'Errand added successfully', type: 'success' });
             setAlertKey(Date.now());
         } catch (error) {
