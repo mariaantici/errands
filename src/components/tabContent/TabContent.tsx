@@ -8,7 +8,7 @@ import AddErrandButton from '@/components/tabContent/AddErrandButton';
 import RecommendedErrands from '@/components/tabContent/RecommendedErrands';
 
 // TabContent component
-const TabContent: React.FC<{ list: string, userId: string }> = ({ list, userId }) => {
+const TabContent: React.FC<{ list: string }> = ({ list }) => {
     // Set state for managing the selected date across the components
     const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
 
@@ -18,9 +18,9 @@ const TabContent: React.FC<{ list: string, userId: string }> = ({ list, userId }
             <DatePickerMobile selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
             <DatePicker selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
             <ShowSelectedDate date={selectedDate} />
-            <ErrandsListsForUser list={list} userId={userId} date={selectedDate} />
-            <AddErrandButton userId={userId} />
-            <RecommendedErrands userId={userId} />
+            <ErrandsListsForUser list={list} date={selectedDate} />
+            <AddErrandButton />
+            <RecommendedErrands />
         </>
     );
 };

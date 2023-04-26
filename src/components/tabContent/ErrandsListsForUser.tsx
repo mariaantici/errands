@@ -1,10 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import UserIdContext from "@/contexts/UserIdContext";
 import { Alert } from "@/components/Alert";
 import { getErrands } from "@/services/database/errands"
 import ErrandsList from "@/components/tabContent/ErrandsList";
 
 // ErrandsListsForUser component
-const ErrandsListsForUser: React.FC<{ list: string, userId: string, date: Date }> = ({ list, userId, date }) => {
+const ErrandsListsForUser: React.FC<{ list: string, date: Date }> = ({ list, date }) => {
+    // Get the userId from the UserIdContext using useContext
+    const userId = useContext(UserIdContext);
+
     // State to handle fetched errands data
     const [errandsData, setErrandsData] = useState([]);
 

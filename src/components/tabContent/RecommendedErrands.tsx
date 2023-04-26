@@ -5,7 +5,7 @@ import AddErrandForm from "./AddErrandForm";
 const recommendedErrands: string[] = ['Buy groceries', 'Do laundry', 'Wash dishes', 'Take out the trash', 'Vacuum the floor', 'Clean the bathroom', 'Make the bed', 'Cook a meal', 'Water the plants', 'Pay bills', 'Wash the car', 'Walk the dog', 'Change light bulbs', 'Dust the furniture', 'Clean the windows', 'Iron clothes', 'Mop the floor', 'Check the mail', 'Replace air filters', 'Wash bedding', 'Clean the refrigerator', 'Organize the pantry', 'Sweep the porch', 'Clean the oven', 'Trim the lawn', 'Rake leaves', 'Shovel snow', 'Clean the gutters', 'Wipe down countertops', 'Declutter a room']
 
 // RecommendedErrands component
-const RecommendedErrands: React.FC<{ userId: string }> = ({ userId }) => {
+const RecommendedErrands: React.FC = () => {
     // Unique identifier for the modal
     const modalId = "addRecommendedErrandModal";
 
@@ -24,7 +24,7 @@ const RecommendedErrands: React.FC<{ userId: string }> = ({ userId }) => {
                             <label htmlFor={uniqueModalId} className="btn btn-outline-success rounded-full text-content1">
                                 {errand}
                             </label>
-                            < AddErrandForm modalId={uniqueModalId} userId={userId} recommendedName={errand} />
+                            < AddErrandForm modalId={uniqueModalId} recommendedName={errand} />
                         </React.Fragment>
                     );
                 })}
