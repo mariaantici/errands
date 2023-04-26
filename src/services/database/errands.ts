@@ -1,5 +1,4 @@
 import { supabase } from '@/utils/supabaseClient';
-import { Errand } from '@/services/types';
 
 // Create new errand in errands table
 export async function createErrand(userId: string, list_name: string, name: string, date: Date): Promise<void> {
@@ -23,7 +22,7 @@ export async function getErrands(userId: string, date: string): Promise<{}[] | n
     try {
         const { data, error } = await supabase
             .from('errands')
-            .select('list_name, name, status')
+            .select('id, list_name, name, status')
             .eq('user_id', userId)
             .eq('date', date)
 
@@ -35,6 +34,27 @@ export async function getErrands(userId: string, date: string): Promise<{}[] | n
 
     } catch (error) {
         console.error('Error fetching errands', error);
+        throw error;
+    }
+}
+
+// // Update errand's status
+export async function updateErrandStatus(id: string, status: boolean): Promise<{}[] | null> {
+    try {
+        const { data, error } = await supabase
+            .from('errands')
+            .update({ 'status': status })
+            .eq('id', id);
+
+
+        if (error) {
+            throw error;
+        }
+
+        return data;
+
+    } catch (error) {
+        console.error('Error updating errand status', error);
         throw error;
     }
 }
