@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { getSession } from '@/services/auth';
+import Spinner from '@/components/common/Spinner';
 
 // Home component
 const Home: React.FC = () => {
@@ -33,8 +34,12 @@ const Home: React.FC = () => {
     fetchSession();
   }, [router]); // Run useEffect when the router instance changes
 
-  // Render Loading while redirecting
-  return <div>Loading...</div>;
+  // Render Spinner while redirecting
+  return (
+    <div className="w-screen h-screen flex justify-center items-center">
+      <Spinner />
+    </div>
+  );
 };
 
 export default Home;
