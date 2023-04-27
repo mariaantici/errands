@@ -1,5 +1,6 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import UserIdContext from "@/contexts/UserIdContext";
+import ActiveListContext from "@/contexts/ActiveListContext";
 import ErrandsUpdateContext from "@/contexts/ErrandsUpdateContext";
 import { createErrand } from '@/services/database/errands';
 import { Alert } from '@/components/Alert';
@@ -7,8 +8,11 @@ import ReactDatePicker from '@/components/datepickers/ReactDatePicker';
 
 // AddErrandForm component
 const AddErrandForm: React.FC<{ modalId: string, recommendedName?: string }> = ({ modalId, recommendedName = "" }) => {
-    // Get the userId from the UserIdContext using useContext
+    // Get the userId from the UserIdContext
     const userId = useContext(UserIdContext);
+
+    // Get the active list from ActiveListContext
+    const activeList = useContext(ActiveListContext);
 
     // Destructure the updateFlag and toggleUpdateFlag properties from the ErrandsUpdateContext
     const { updateFlag, toggleUpdateFlag } = useContext(ErrandsUpdateContext);
@@ -17,7 +21,7 @@ const AddErrandForm: React.FC<{ modalId: string, recommendedName?: string }> = (
     const [name, setName] = useState(recommendedName);
 
     // State for managing the selected list
-    const [list, setList] = useState("household")
+    const [list, setList] = useState(activeList !== 'all' ? activeList : 'household')
 
     // State for managing selected date
     const [date, setDate] = useState<Date | null>(null);
@@ -64,6 +68,11 @@ const AddErrandForm: React.FC<{ modalId: string, recommendedName?: string }> = (
         }
     };
 
+    // useEffect hook to update the 'list' state when the 'activeList' value changes
+    useEffect(() => {
+        setList(activeList !== 'all' ? activeList : 'household');
+    }, [activeList]);
+
     // Render AddErrandForm
     return (
         <>
@@ -94,7 +103,7 @@ const AddErrandForm: React.FC<{ modalId: string, recommendedName?: string }> = (
                         </div>
 
                         <label htmlFor="name" className="tracking-wide">Pick a list</label>
-                        <select id={modalId} className="select" onChange={(e) => setList(e.target.value)}>
+                        <select id={modalId} className="select" value={list} onChange={(e) => setList(e.target.value)}>
                             <option>household</option>
                             <option>trip</option>
                             <option>workplace</option>
