@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import UserIdContext from "@/contexts/UserIdContext";
+import ErrandsUpdateContext from "@/contexts/ErrandsUpdateContext";
 import { Alert } from "@/components/Alert";
 import { getErrands } from "@/services/database/errands"
 import ErrandsList from "@/components/tabContent/showErrands/ErrandsList";
@@ -8,6 +9,10 @@ import ErrandsList from "@/components/tabContent/showErrands/ErrandsList";
 const ErrandsListsForUser: React.FC<{ list: string, date: Date }> = ({ list, date }) => {
     // Get the userId from the UserIdContext using useContext
     const userId = useContext(UserIdContext);
+
+    // Destructure the updateFlag and toggleUpdateFlag properties from the ErrandsUpdateContext
+    const { updateFlag, toggleUpdateFlag } = useContext(ErrandsUpdateContext);
+
 
     // State to handle fetched errands data
     const [errandsData, setErrandsData] = useState([]);
@@ -45,7 +50,7 @@ const ErrandsListsForUser: React.FC<{ list: string, date: Date }> = ({ list, dat
         if (userId) {
             fetchErrands();
         }
-    }, [userId, formattedDate]);
+    }, [userId, formattedDate, updateFlag]);
 
     // Filter errands
     const filteredErrands = filterErrandsByList(errandsData, list);

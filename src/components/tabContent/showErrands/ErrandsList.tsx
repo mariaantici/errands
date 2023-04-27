@@ -1,9 +1,13 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import ErrandsUpdateContext from "@/contexts/ErrandsUpdateContext";
 import { updateErrandStatus } from "@/services/database/errands";
 import { Alert } from "@/components/Alert";
 
 // ErrandsList component
 const ErrandsList: React.FC<{ errands: any[] }> = ({ errands }) => {
+    // Destructure the updateFlag and toggleUpdateFlag properties from the ErrandsUpdateContext
+    const { updateFlag, toggleUpdateFlag } = useContext(ErrandsUpdateContext);
+
     // State to handle the alerts
     const [alert, setAlert] = useState(null);
     const [alertKey, setAlertKey] = useState(null);
@@ -12,6 +16,9 @@ const ErrandsList: React.FC<{ errands: any[] }> = ({ errands }) => {
     async function updateErrand(errandId: string, statusValue: boolean) {
         try {
             await updateErrandStatus(errandId, statusValue);
+
+            // Toggle the updateFlag value after an errand's status has been updated
+            toggleUpdateFlag();
         } catch (error) {
             setAlert({ title: 'Error', message: error.message, type: 'error' });
             setAlertKey(Date.now());

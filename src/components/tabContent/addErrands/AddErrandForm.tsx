@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import UserIdContext from "@/contexts/UserIdContext";
+import ErrandsUpdateContext from "@/contexts/ErrandsUpdateContext";
 import { createErrand } from '@/services/database/errands';
 import { Alert } from '@/components/Alert';
 import ReactDatePicker from '@/components/datepickers/ReactDatePicker';
@@ -8,6 +9,9 @@ import ReactDatePicker from '@/components/datepickers/ReactDatePicker';
 const AddErrandForm: React.FC<{ modalId: string, recommendedName?: string }> = ({ modalId, recommendedName = "" }) => {
     // Get the userId from the UserIdContext using useContext
     const userId = useContext(UserIdContext);
+
+    // Destructure the updateFlag and toggleUpdateFlag properties from the ErrandsUpdateContext
+    const { updateFlag, toggleUpdateFlag } = useContext(ErrandsUpdateContext);
 
     // State to handle the input value of the name field
     const [name, setName] = useState(recommendedName);
@@ -54,6 +58,9 @@ const AddErrandForm: React.FC<{ modalId: string, recommendedName?: string }> = (
         // Close modal only if the name has a certain length
         if (name.length > 1) {
             setModalVisible(false);
+
+            // Toggle the updateFlag value after an errand has been added
+            toggleUpdateFlag();
         }
     };
 
