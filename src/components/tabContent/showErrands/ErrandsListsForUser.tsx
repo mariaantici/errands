@@ -4,6 +4,7 @@ import ErrandsUpdateContext from "@/contexts/ErrandsUpdateContext";
 import { Alert } from "@/components/Alert";
 import { getErrands } from "@/services/database/errands"
 import ErrandsList from "@/components/tabContent/showErrands/ErrandsList";
+import Spinner from "@/components/common/Spinner";
 
 // ErrandsListsForUser component
 const ErrandsListsForUser: React.FC<{ list: string, date: Date }> = ({ list, date }) => {
@@ -13,9 +14,11 @@ const ErrandsListsForUser: React.FC<{ list: string, date: Date }> = ({ list, dat
     // Destructure the updateFlag and toggleUpdateFlag properties from the ErrandsUpdateContext
     const { updateFlag, toggleUpdateFlag } = useContext(ErrandsUpdateContext);
 
-
     // State to handle fetched errands data
     const [errandsData, setErrandsData] = useState([]);
+
+    // State for managing the loading status
+    const [loading, setLoading] = useState(true);
 
     // State to handle the alerts
     const [alert, setAlert] = useState(null);
@@ -41,6 +44,7 @@ const ErrandsListsForUser: React.FC<{ list: string, date: Date }> = ({ list, dat
             try {
                 const errands = await getErrands(userId, formattedDate);
                 setErrandsData(errands);
+                setLoading(false);
             } catch (error) {
                 setAlert({ title: 'Error', message: error.message, type: 'error' });
                 setAlertKey(Date.now());
@@ -65,7 +69,11 @@ const ErrandsListsForUser: React.FC<{ list: string, date: Date }> = ({ list, dat
                     type={alert.type}
                 />
             )}
-            {errandsData.length === 0 || (list !== "all" && filteredErrands.length === 0) ? (
+            {loading ? (
+                <div className="flex justify-center items-center h-36">
+                    <Spinner />
+                </div>
+            ) : errandsData.length === 0 || (list !== "all" && filteredErrands.length === 0) ? (
                 <div className="flex justify-center items-center">
                     <p className="text-lg text-content3">No errands to be shown</p>
                 </div>
