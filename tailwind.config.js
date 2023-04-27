@@ -12,7 +12,7 @@ module.exports = {
         'pacifico': ['Pacifico', 'cursive'],
       },
       screens: {
-        'xxs': '400px',
+        'xxs': '420px',
         'xs': '490px',
         'sm': '640px',
         'md': '951px',

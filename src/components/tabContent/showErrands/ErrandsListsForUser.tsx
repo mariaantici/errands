@@ -82,15 +82,12 @@ const ErrandsListsForUser: React.FC<{ date: Date }> = ({ date }) => {
                     <p className="text-lg text-content3">No errands to be shown</p>
                 </div>
             ) : (
-                <div className="flex flex-row flex-nowrap justify-center items-start min-h-full">
-                    <>
-                        <div className="card items-center justify-center bg-opacity-0 border-0 shadow-none xxs:mb-4 lg:mb-0">
-                            <h2 className="font-pacifico text-lg text-green-600">done</h2>
-                            <ErrandsList errands={list === "all" ? errandsData.filter((errand) => errand.status === true) : filteredErrands.filter((errand) => errand.status === true)} />
-                        </div>
-                        <div className="divider divider-vertical h-36"></div>
-                    </>
-                    <div className="card items-center justify-center bg-opacity-0 border-0 shadow-none xxs:mb-4 lg:mb-0">
+                <div className="flex flex-row flex-nowrap justify-center items-start divide-x divide-content3">
+                    <div className="flex flex-col items-center w-[400px]">
+                        <h2 className="font-pacifico text-lg text-green-600">done</h2>
+                        <ErrandsList errands={list === "all" ? errandsData.filter((errand) => errand.status === true) : filteredErrands.filter((errand) => errand.status === true)} />
+                    </div>
+                    <div className="flex flex-col items-center w-[400px]">
                         <h2 className="font-pacifico text-lg text-green-600">undone</h2>
                         <ErrandsList errands={list === "all" ? errandsData.filter((errand) => errand.status === false) : filteredErrands.filter((errand) => errand.status === false)} />
                     </div>

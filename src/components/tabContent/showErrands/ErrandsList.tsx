@@ -43,7 +43,7 @@ const ErrandsList: React.FC<{ errands: any[] }> = ({ errands }) => {
             ) : (
                 errands.map((errand, index) => {
                     return (
-                        <div className="block my-1" key={index}>
+                        <div className="block my-1 ml-1 xxs:ml-0" key={index}>
                             <input type="checkbox" className="checkbox checkbox-bordered-success checkbox-md" checked={errand.status === true} onChange={() => updateErrand(errand.id, !errand.status)} />
                             <span className="text-md ml-2 tracking-tight">{errand.name}</span>
                         </div>
