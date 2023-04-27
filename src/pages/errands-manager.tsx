@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import UserIdContext from "@/contexts/UserIdContext";
+import ActiveListContext from "@/contexts/ActiveListContext";
 import Navbar from "@/components/Navbar";
 import Tabs from "@/components/Tabs";
 import TabContent from "@/components/tabContent/TabContent";
@@ -65,7 +66,9 @@ const ErrandsManager: React.FC = () => {
                 <InputName isOpen={isOpen} />
                 <Tabs onTabChange={setActiveTab} activeTab={activeTab} />
                 <UserIdContext.Provider value={userId}>
-                    <TabContent list={activeTab} />
+                    <ActiveListContext.Provider value={activeTab}>
+                        <TabContent />
+                    </ActiveListContext.Provider>
                 </UserIdContext.Provider>
             </main>
         </>

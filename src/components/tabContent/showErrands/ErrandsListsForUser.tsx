@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import UserIdContext from "@/contexts/UserIdContext";
+import ActiveListContext from "@/contexts/ActiveListContext";
 import ErrandsUpdateContext from "@/contexts/ErrandsUpdateContext";
 import { Alert } from "@/components/Alert";
 import { getErrands } from "@/services/database/errands"
@@ -7,9 +8,12 @@ import ErrandsList from "@/components/tabContent/showErrands/ErrandsList";
 import Spinner from "@/components/common/Spinner";
 
 // ErrandsListsForUser component
-const ErrandsListsForUser: React.FC<{ list: string, date: Date }> = ({ list, date }) => {
-    // Get the userId from the UserIdContext using useContext
+const ErrandsListsForUser: React.FC<{ date: Date }> = ({ date }) => {
+    // Get the userId from the UserIdContext
     const userId = useContext(UserIdContext);
+
+    // Get the active list from ActiveListContext
+    const list = useContext(ActiveListContext);
 
     // Destructure the updateFlag and toggleUpdateFlag properties from the ErrandsUpdateContext
     const { updateFlag, toggleUpdateFlag } = useContext(ErrandsUpdateContext);

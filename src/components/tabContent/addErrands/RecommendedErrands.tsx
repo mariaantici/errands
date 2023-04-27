@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import ActiveListContext from "@/contexts/ActiveListContext";
 import AddErrandForm from "@/components/tabContent/addErrands/AddErrandForm";
 
 // List of sample errands
@@ -19,7 +20,10 @@ const recommendedErrands: { list: string, errands: string[] }[] = [
 
 
 // RecommendedErrands component
-const RecommendedErrands: React.FC<{ list: string }> = ({ list }) => {
+const RecommendedErrands: React.FC = () => {
+    // Get the active list from ActiveListContext
+    const list = useContext(ActiveListContext);
+
     // Unique identifier for the modal
     const modalId = "addRecommendedErrandModal";
 
