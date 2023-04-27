@@ -74,7 +74,7 @@ const ErrandsListsForUser: React.FC<{ list: string, date: Date }> = ({ list, dat
                     <Spinner />
                 </div>
             ) : errandsData.length === 0 || (list !== "all" && filteredErrands.length === 0) ? (
-                <div className="flex justify-center items-center">
+                <div className="flex justify-center items-center h-36">
                     <p className="text-lg text-content3">No errands to be shown</p>
                 </div>
             ) : (

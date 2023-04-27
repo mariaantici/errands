@@ -30,7 +30,7 @@ const TabContent: React.FC<{ list: string }> = ({ list }) => {
             <ErrandsUpdateContext.Provider value={{ updateFlag, toggleUpdateFlag }}>
                 <ErrandsListsForUser list={list} date={selectedDate} />
                 <AddErrandButton />
-                <RecommendedErrands />
+                <RecommendedErrands list={list} />
             </ErrandsUpdateContext.Provider>
         </>
     );
