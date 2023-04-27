@@ -74,21 +74,21 @@ const ErrandsListsForUser: React.FC<{ date: Date }> = ({ date }) => {
                 />
             )}
             {loading ? (
-                <div className="flex justify-center items-center h-36">
+                <div className="flex justify-center items-center h-52">
                     <Spinner />
                 </div>
             ) : errandsData.length === 0 || (list !== "all" && filteredErrands.length === 0) ? (
-                <div className="flex justify-center items-center h-36">
+                <div className="flex justify-center items-center h-24">
                     <p className="text-lg text-content3">No errands to be shown</p>
                 </div>
             ) : (
                 <div className="flex flex-row flex-nowrap justify-center items-start divide-x divide-content3">
                     <div className="flex flex-col items-center w-[400px]">
-                        <h2 className="font-pacifico text-lg text-green-600">done</h2>
+                        <h2 className="font-pacifico text-lg text-green-600 mb-3">done</h2>
                         <ErrandsList errands={list === "all" ? errandsData.filter((errand) => errand.status === true) : filteredErrands.filter((errand) => errand.status === true)} />
                     </div>
                     <div className="flex flex-col items-center w-[400px]">
-                        <h2 className="font-pacifico text-lg text-green-600">undone</h2>
+                        <h2 className="font-pacifico text-lg text-green-600 mb-3">undone</h2>
                         <ErrandsList errands={list === "all" ? errandsData.filter((errand) => errand.status === false) : filteredErrands.filter((errand) => errand.status === false)} />
                     </div>
                 </div>

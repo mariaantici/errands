@@ -6,8 +6,8 @@ import LogoutButton from "@/components/auth/LogoutButton";
 const Navbar: React.FC = () => {
     // Render Navbar
     return (
-        <div className="h-[108px]">
-            <div className="navbar navbar-glass navbar-sticky max-w-[95%] lg:max-w-5xl mx-auto mt-5 rounded-xl">
+        <div className="h-[108px] xs:h-[96px]">
+            <div className="navbar navbar-glass navbar-sticky max-w-[95%] lg:max-w-5xl mx-auto mt-5 xs:mt-2 rounded-xl">
                 <div className="navbar-start">
                     <h1 className="font-pacifico text-2xl hidden md:block">Tame the chaos, embrace </h1>
                     <h1 className="font-pacifico text-2xl text-green-600 ml-1">Errands</h1>
