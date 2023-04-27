@@ -40,7 +40,6 @@ const ErrandsListsForUser: React.FC<{ list: string, date: Date }> = ({ list, dat
         async function fetchErrands() {
             try {
                 const errands = await getErrands(userId, formattedDate);
-                console.log(errands);
                 setErrandsData(errands);
             } catch (error) {
                 setAlert({ title: 'Error', message: error.message, type: 'error' });
@@ -72,18 +71,16 @@ const ErrandsListsForUser: React.FC<{ list: string, date: Date }> = ({ list, dat
                 </div>
             ) : (
                 <div className="flex flex-row flex-nowrap justify-center items-start min-h-full">
-                    {list !== "all" && (
-                        <>
-                            <div className="card items-center justify-center bg-opacity-0 border-0 shadow-none xxs:mb-4 lg:mb-0">
-                                <h2 className="font-pacifico text-lg text-green-600">done</h2>
-                                <ErrandsList errands={filteredErrands.filter((errand) => errand.status === true)} />
-                            </div>
-                            <div className="divider divider-vertical h-36"></div>
-                        </>
-                    )}
+                    <>
+                        <div className="card items-center justify-center bg-opacity-0 border-0 shadow-none xxs:mb-4 lg:mb-0">
+                            <h2 className="font-pacifico text-lg text-green-600">done</h2>
+                            <ErrandsList errands={list === "all" ? errandsData.filter((errand) => errand.status === true) : filteredErrands.filter((errand) => errand.status === true)} />
+                        </div>
+                        <div className="divider divider-vertical h-36"></div>
+                    </>
                     <div className="card items-center justify-center bg-opacity-0 border-0 shadow-none xxs:mb-4 lg:mb-0">
-                        <h2 className="font-pacifico text-lg text-green-600">{list === "all" ? "all errands" : "undone"}</h2>
-                        <ErrandsList errands={list === "all" ? errandsData : filteredErrands.filter((errand) => errand.status === false)} />
+                        <h2 className="font-pacifico text-lg text-green-600">undone</h2>
+                        <ErrandsList errands={list === "all" ? errandsData.filter((errand) => errand.status === false) : filteredErrands.filter((errand) => errand.status === false)} />
                     </div>
                 </div>
             )}
