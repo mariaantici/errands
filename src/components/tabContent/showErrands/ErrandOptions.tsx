@@ -37,6 +37,7 @@ const ErrandOptions: React.FC<{ errandId: string, status: boolean }> = ({ errand
     useEffect(() => {
         if (date) {
             updateDate();
+            setDate(null);
         }
     }, [date])
 
