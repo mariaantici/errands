@@ -133,6 +133,7 @@ const AuthForm: React.FC = () => {
                                         id="remember-me"
                                         name="remember-me"
                                         type="checkbox"
+                                        defaultChecked
                                         className="checkbox checkbox-sm checkbox-bordered-success"
                                     />
                                     <label htmlFor="remember-me" className="ml-2 block text-sm">
