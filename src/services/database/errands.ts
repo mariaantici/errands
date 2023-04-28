@@ -38,14 +38,13 @@ export async function getErrands(userId: string, date: string): Promise<{}[] | n
     }
 }
 
-// // Update errand's status
+// Update errand's status
 export async function updateErrandStatus(id: string, status: boolean): Promise<{}[] | null> {
     try {
         const { data, error } = await supabase
             .from('errands')
             .update({ 'status': status })
             .eq('id', id);
-
 
         if (error) {
             throw error;
@@ -55,6 +54,46 @@ export async function updateErrandStatus(id: string, status: boolean): Promise<{
 
     } catch (error) {
         console.error('Error updating errand status', error);
+        throw error;
+    }
+}
+
+// Update errand's date
+export async function updateErrandDate(id: string, date: Date): Promise<{}[] | null> {
+    try {
+        const { data, error } = await supabase
+            .from('errands')
+            .update({ 'date': date, 'status': false })
+            .eq('id', id);
+
+        if (error) {
+            throw error;
+        }
+
+        return data;
+
+    } catch (error) {
+        console.error('Error updating errand date', error);
+        throw error;
+    }
+}
+
+// Delete errand
+export async function deleteErrand(errandId: string): Promise<void> {
+    try {
+        const { data, error } = await supabase
+            .from('errands')
+            .delete()
+            .eq('id', errandId);
+
+        if (error) {
+            throw error;
+        }
+
+        return data;
+
+    } catch (error) {
+        console.error('Error updating errand date', error);
         throw error;
     }
 }
