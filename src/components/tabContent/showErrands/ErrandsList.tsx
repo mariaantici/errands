@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import ErrandsUpdateContext from "@/contexts/ErrandsUpdateContext";
 import { updateErrandStatus } from "@/services/database/errands";
 import { Alert } from "@/components/Alert";
+import ErrandOptions from "./ErrandOptions";
 
 // ErrandsList component
 const ErrandsList: React.FC<{ errands: any[] }> = ({ errands }) => {
@@ -44,8 +45,18 @@ const ErrandsList: React.FC<{ errands: any[] }> = ({ errands }) => {
                 errands.map((errand, index) => {
                     return (
                         <div className="block my-1 ml-1 xxs:ml-0" key={index}>
-                            <input type="checkbox" className="checkbox checkbox-bordered-success checkbox-md" checked={errand.status === true} onChange={() => updateErrand(errand.id, !errand.status)} />
-                            <span className="text-md ml-2 tracking-tight">{errand.name}</span>
+                            <div className="flex items-center">
+                                <label className="flex items-center">
+                                    <input
+                                        type="checkbox"
+                                        className="checkbox checkbox-bordered-success checkbox-md"
+                                        checked={errand.status === true}
+                                        onChange={() => updateErrand(errand.id, !errand.status)}
+                                    />
+                                    <span className="text-md ml-2 tracking-tight">{errand.name}</span>
+                                </label>
+                                <ErrandOptions errandId={errand.id} status={errand.status} />
+                            </div>
                         </div>
                     );
                 })
