@@ -17,8 +17,8 @@ const validationSchema = Yup.object().shape({
         .min(8, 'Password must be at least 8 characters')
 });
 
-// UpdateProfile component
-const UpdateProfile: React.FC = () => {
+// UpdateProfileForm component
+const UpdateProfileForm: React.FC = () => {
     // State to handle the alerts
     const [alert, setAlert] = useState(null);
     const [alertKey, setAlertKey] = useState(null);
@@ -65,7 +65,7 @@ const UpdateProfile: React.FC = () => {
         }
     };
 
-    // Render the UpdateProfile
+    // Render the UpdateProfileForm
     return (
         <>
             {alert && (
@@ -101,4 +101,4 @@ const UpdateProfile: React.FC = () => {
     );
 };
 
-export default UpdateProfile;
+export default UpdateProfileForm;

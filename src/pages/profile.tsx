@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleLeft } from '@fortawesome/free-solid-svg-icons';
-import UpdateProfile from '@/components/userLogic/UpdateProfile'
+import UpdateProfileForm from '@/components/userLogic/UpdateProfileForm'
 
 // Profile component
 const Profile: React.FC = () => {
@@ -18,7 +18,7 @@ const Profile: React.FC = () => {
             </div>
             <div className="flex items-center justify-center min-h-screen">
                 <div className="m-auto">
-                    <UpdateProfile />
+                    <UpdateProfileForm />
                 </div>
             </div>
         </>
