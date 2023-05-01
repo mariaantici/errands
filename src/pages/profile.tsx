@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleLeft } from '@fortawesome/free-solid-svg-icons';
-import UpdateProfile from '@/components/UpdateProfile'
+import UpdateProfile from '@/components/userLogic/UpdateProfile'
 
 // Profile component
 const Profile: React.FC = () => {

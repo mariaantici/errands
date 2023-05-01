@@ -8,7 +8,7 @@ import Spinner from '@/components/common/Spinner';
 import Navbar from "@/components/Navbar";
 import Tabs from "@/components/Tabs";
 import TabContent from "@/components/tabContent/TabContent";
-import InputName from "@/components/InputName";
+import InputName from "@/components/userLogic/InputName";
 
 // ErrandsManager component
 const ErrandsManager: React.FC = () => {
