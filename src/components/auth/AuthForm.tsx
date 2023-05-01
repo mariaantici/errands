@@ -32,7 +32,6 @@ const AuthForm: React.FC = () => {
             if (user) {
                 try {
                     let userId = await login(values.email, values.password);
-                    console.log(userId)
 
                     // Create the user in users table
                     try {
