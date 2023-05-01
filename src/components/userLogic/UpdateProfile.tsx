@@ -1,15 +1,19 @@
-import { useState } from "react";
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { useState } from "react";;
 import * as Yup from 'yup';
 import { updateUser } from "@/services/database/users";
 import { updatePassword } from '@/services/auth';
 import { Alert } from "@/components/Alert";
+import FormComponent from "../common/Form/FormComponent";
+import InputField from "../common/Form/InputField";
+
+// Define the initial values
+const initialValues = { name: '', password: '' };
 
 // Define the form validation schema using Yup
 const validationSchema = Yup.object().shape({
-    newName: Yup.string()
+    name: Yup.string()
         .min(2, 'Name must be at least 2 characters'),
-    newPassword: Yup.string()
+    password: Yup.string()
         .min(8, 'Password must be at least 8 characters')
 });
 
@@ -20,9 +24,9 @@ const UpdateProfile: React.FC = () => {
     const [alertKey, setAlertKey] = useState(null);
 
     // Handles the name reset process
-    const updateName = async (values: { newName: string }, { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }) => {
+    const updateName = async (values: { name: string }, { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }) => {
         try {
-            await updateUser(values.newName);
+            await updateUser(values.name);
             setAlert({ title: 'Success', message: 'Name updated successfully', type: 'success' });
             setAlertKey(Date.now());
         } catch (error) {
@@ -32,9 +36,9 @@ const UpdateProfile: React.FC = () => {
     };
 
     // Handles the password reset process
-    async function updateUserPassword(values: { newPassword: string }, { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }) {
+    async function updateUserPassword(values: { password: string }, { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }) {
         try {
-            await updatePassword(values.newPassword);
+            await updatePassword(values.password);
             setAlert({ title: 'Success', message: 'Your password has been updated successfully', type: 'success' });
             setAlertKey(Date.now());
         } catch (error) {
@@ -43,15 +47,15 @@ const UpdateProfile: React.FC = () => {
         }
     }
 
-    const updateProfile = async (values: { newName: string; newPassword: string }, actions: { setSubmitting: (isSubmitting: boolean) => void }) => {
+    const updateProfile = async (values: { name: string; password: string }, actions: { setSubmitting: (isSubmitting: boolean) => void }) => {
         try {
             // Check if a new name is provided and call the updateName function
-            if (values.newName) {
-                await updateName({ newName: values.newName }, actions);
+            if (values.name) {
+                await updateName({ name: values.name }, actions);
             }
             // Check if a new password is provided and call the updateUserPassword function
-            if (values.newPassword) {
-                await updateUserPassword({ newPassword: values.newPassword }, actions);
+            if (values.password) {
+                await updateUserPassword({ password: values.password }, actions);
             }
         } catch (error) {
             // Handle any errors here if needed
@@ -63,7 +67,7 @@ const UpdateProfile: React.FC = () => {
 
     // Render the UpdateProfile
     return (
-        <div className="card min-w-[340px] xs:min-w-[380px]">
+        <>
             {alert && (
                 <Alert
                     key={alertKey}
@@ -72,55 +76,28 @@ const UpdateProfile: React.FC = () => {
                     type={alert.type}
                 />
             )}
-            <div className="card-body">
-                <Formik
-                    initialValues={{ newName: '', newPassword: '' }}
-                    validationSchema={validationSchema}
-                    onSubmit={updateProfile}
-                >
-                    {({ isSubmitting }) => (
-                        <Form className="flex flex-col gap-5">
-                            <h2 className="font-pacifico text-2xl">This is your profile</h2>
-                            <p className="mb-3 mt-[-10px] text-sm text-green-600 text-left tracking-wide">change your name or the password</p>
-
-                            <div>
-                                <label htmlFor="newName" className="tracking-wide">
-                                    New Name
-                                </label>
-                                <Field
-                                    id="newName"
-                                    name="newName"
-                                    type="name"
-                                    placeholder="Enter your new name"
-                                    className="input my-1"
-                                />
-                                <div className="h-2 text-xs text-red-600">
-                                    <ErrorMessage name="newName" />
-                                </div>
-                            </div>
-
-                            <div>
-                                <label htmlFor="newPassword" className="tracking-wide">
-                                    New Password
-                                </label>
-                                <Field
-                                    id="newPassword"
-                                    name="newPassword"
-                                    type="password"
-                                    placeholder="Enter your new password"
-                                    className="input my-1"
-                                />
-                                <div className="h-3 text-xs text-red-600">
-                                    <ErrorMessage name="newPassword" />
-                                </div>
-                            </div>
-
-                            <button className="btn btn-outline-success btn-block" disabled={isSubmitting} type="submit">Update profile</button>
-                        </Form>
-                    )}
-                </Formik>
-            </div>
-        </div >
+            <FormComponent
+                header="Looks like your profile"
+                description="change your name or the password"
+                initialValues={initialValues}
+                validationSchema={validationSchema}
+                handleSubmit={updateProfile}
+                buttonText="Update profile"
+            >
+                <div>
+                    <InputField
+                        field="name"
+                        fieldName="New Name"
+                        fieldPlaceholder="Enter your new name"
+                    />
+                    <InputField
+                        field="password"
+                        fieldName="New Password"
+                        fieldPlaceholder="Enter your new password"
+                    />
+                </div>
+            </FormComponent>
+        </>
     );
 };
 
