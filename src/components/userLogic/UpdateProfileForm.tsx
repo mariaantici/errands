@@ -24,7 +24,7 @@ const UpdateProfileForm: React.FC = () => {
     const [alertKey, setAlertKey] = useState(null);
 
     // Handles the name reset process
-    const updateName = async (values: { name: string }, { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }) => {
+    const updateName = async (values: { name: string }) => {
         try {
             await updateUser(values.name);
             setAlert({ title: 'Success', message: 'Name updated successfully', type: 'success' });
@@ -36,7 +36,7 @@ const UpdateProfileForm: React.FC = () => {
     };
 
     // Handles the password reset process
-    async function updateUserPassword(values: { password: string }, { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }) {
+    const updateUserPassword = async (values: { password: string }) => {
         try {
             await updatePassword(values.password);
             setAlert({ title: 'Success', message: 'Your password has been updated successfully', type: 'success' });
@@ -51,11 +51,11 @@ const UpdateProfileForm: React.FC = () => {
         try {
             // Check if a new name is provided and call the updateName function
             if (values.name) {
-                await updateName({ name: values.name }, actions);
+                await updateName({ name: values.name });
             }
             // Check if a new password is provided and call the updateUserPassword function
             if (values.password) {
-                await updateUserPassword({ password: values.password }, actions);
+                await updateUserPassword({ password: values.password });
             }
         } catch (error) {
             // Handle any errors here if needed
