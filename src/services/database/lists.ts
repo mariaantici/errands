@@ -38,3 +38,21 @@ export async function createDefaultListsForUser(userId: string): Promise<void> {
         }
     }
 }
+
+// Update list's id and set is owner to false
+export async function updateListId(userId: string, listId: string, listName: string): Promise<void> {
+    try {
+        const { error } = await supabase
+            .from('lists')
+            .update({ list_id: listId, is_owner: false })
+            .eq('user_id', userId)
+            .eq('list_name', listName);
+
+        if (error) {
+            throw error;
+        }
+    } catch (error) {
+        console.error('Error updating list id', error);
+        throw error;
+    }
+}
