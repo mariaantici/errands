@@ -49,7 +49,7 @@ const ErrandsList: React.FC<{ errands: any[] }> = ({ errands }) => {
                                 <label className="flex items-center">
                                     <input
                                         type="checkbox"
-                                        className="checkbox checkbox-bordered-success checkbox-md"
+                                        className="checkbox checkbox-bordered-success border-b-2 rounded-xl checkbox-md"
                                         checked={errand.status === true}
                                         onChange={() => updateErrand(errand.id, !errand.status)}
                                     />

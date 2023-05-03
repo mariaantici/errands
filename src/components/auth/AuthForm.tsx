@@ -170,7 +170,7 @@ const AuthForm: React.FC = () => {
                                         </div>
                                     </div>
                                 </div>
-                                <button type="submit" disabled={isSubmitting} className="btn btn-outline-success w-full tracking-wider mt-[-16px]">
+                                <button type="submit" disabled={isSubmitting} className="btn btn-outline-success w-full rounded-3xl tracking-wider mt-[-16px]">
                                     Sign in or Sign up
                                 </button>
                             </Form>

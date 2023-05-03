@@ -13,7 +13,7 @@ const FormComponent: React.FC<{ header: string, description: string, initialValu
                                 <p className="text-sm text-green-600 tracking-wide">{description}</p>
                             </div>
                             {children}
-                            <button type="submit" disabled={isSubmitting} className="btn btn-outline-success w-full tracking-wider mt-[-16px]">
+                            <button type="submit" disabled={isSubmitting} className="btn btn-outline-success w-full rounded-3xl tracking-wider mt-[-16px]">
                                 {buttonText}
                             </button>
                         </Form>

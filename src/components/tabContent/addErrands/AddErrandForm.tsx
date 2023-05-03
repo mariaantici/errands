@@ -88,37 +88,40 @@ const AddErrandForm: React.FC<{ modalId: string, recommendedName?: string }> = (
             <div className="modal">
                 <label className="modal-overlay"></label>
                 <form onSubmit={addErrand}>
-                    <div className="modal-content flex flex-col gap-3 min-w-[340px] xs:min-w-[360px]">
+                    <div className="modal-content flex flex-col gap-6 min-w-[340px] xs:min-w-[360px]">
                         <label htmlFor={modalId} className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
                             ✕
                         </label>
-
-                        <h2 className="font-pacifico text-2xl">New Errand</h2>
-                        <p className="mb-3 mt-[-10px] text-sm text-green-600 text-left tracking-wide">time to get shit done</p>
-
-                        <label htmlFor="name" className="tracking-wide">Name</label>
-                        <input id={modalId} className="input" placeholder="Name this errand like you mean it" value={name} onChange={(e) => setName(e.target.value)} />
-                        <div className="h-2">
-                            {(name.length < 2 && name.length !== 0) && <p className="text-xs text-red-600">Name must have at least 2 characters</p>}
+                        <div className="text-left">
+                            <h2 className="text-2xl font-pacifico mb-2">New Errand</h2>
+                            <p className="text-sm text-green-600 tracking-wide">time to get shit done</p>
                         </div>
-
-                        <label htmlFor="name" className="tracking-wide">Pick a list</label>
-                        <select id={modalId} className="select" value={list} onChange={(e) => setList(e.target.value)}>
-                            <option>household</option>
-                            <option>trip</option>
-                            <option>workplace</option>
-                        </select>
-
-                        <label htmlFor="name" className="tracking-wide mt-6">When</label>
-                        <div>
-                            <ReactDatePicker className="input mb-7" placeholder="Select a Date"
-                                selected={date}
-                                onChange={(date) => setDate(date)} />
+                        <div className="space-y-1">
+                            <label htmlFor="name" className="tracking-wide">Name</label>
+                            <input id={modalId} className="input" placeholder="Name this errand like you mean it" value={name} onChange={(e) => setName(e.target.value)} />
+                            <div className="h-1">
+                                {(name.length < 2 && name.length !== 0) && <p className="text-xs text-red-600">Name must have at least 2 characters</p>}
+                            </div>
                         </div>
-
+                        <div className="space-y-1 mb-2">
+                            <label htmlFor="name" className="tracking-wide">Pick a list</label>
+                            <select id={modalId} className="select" value={list} onChange={(e) => setList(e.target.value)}>
+                                <option>household</option>
+                                <option>trip</option>
+                                <option>workplace</option>
+                            </select>
+                        </div>
+                        <div className="space-y-1 mb-2">
+                            <label htmlFor="name" className="tracking-wide">When</label>
+                            <div>
+                                <ReactDatePicker className="input" placeholder="Select a Date"
+                                    selected={date}
+                                    onChange={(date) => setDate(date)} />
+                            </div>
+                        </div>
                         <div className="flex gap-3">
-                            <button type="submit" className="btn btn-outline-success btn-block">Add Errand</button>
-                            <label htmlFor={modalId} className="btn btn-block">Cancel</label>
+                            <button type="submit" className="btn btn-outline-success btn-block rounded-3xl">Add Errand</button>
+                            <label htmlFor={modalId} className="btn btn-block rounded-3xl">Cancel</label>
                         </div>
                     </div>
                 </form>

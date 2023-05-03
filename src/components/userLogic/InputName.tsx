@@ -50,22 +50,26 @@ const InputName: React.FC<{ isOpen?: boolean }> = ({ isOpen = false }) => {
             )}            <div className="modal">
                 <label className="modal-overlay"></label>
                 <form onSubmit={updateName}>
-                    <div className="modal-content flex flex-col gap-5 min-w-[340px] xs:min-w-[360px]">
-                        <h2 className="font-pacifico text-2xl">Your name</h2>
-                        <p className="mb-3 mt-[-10px] text-sm text-green-600 text-left tracking-wide">no need for a full name, even a nickname works</p>
-                        <label htmlFor="name" className="tracking-wide">
-                            Name
-                        </label>
-                        <input
-                            className="input mt-[-5px]"
-                            placeholder="Enter your name"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)} // Update the name state when the input value changes
-                        />
-                        <div className="h-7">
-                            {(name.length < 2 && name.length !== 0) && <p className="text-xs text-red-600">Name must have at least 2 characters</p>}
+                    <div className="modal-content flex flex-col gap-7 min-w-[340px] xs:min-w-[360px]">
+                        <div className="text-left">
+                            <h2 className="text-2xl font-pacifico mb-2">Name</h2>
+                            <p className="text-sm text-green-600 tracking-wide">no need for a full name, a nickname will do</p>
                         </div>
-                        <button className="btn btn-outline-success min-w-[200px] mx-auto" type="submit">
+                        <div className="space-y-1">
+                            <label htmlFor="name" className="tracking-wide">
+                                Name
+                            </label>
+                            <input
+                                className="input"
+                                placeholder="Enter your name"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)} // Update the name state when the input value changes
+                            />
+                            <div className="h-1">
+                                {(name.length < 2 && name.length !== 0) && <p className="text-xs text-red-600">Name must have at least 2 characters</p>}
+                            </div>
+                        </div>
+                        <button className="btn btn-outline-success rounded-3xl w-full" type="submit">
                             Save Name
                         </button>
                     </div>
