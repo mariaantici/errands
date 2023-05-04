@@ -38,8 +38,8 @@ const ErrandsList: React.FC<{ errands: any[] }> = ({ errands }) => {
                 />
             )}
             {errands.length === 0 ? (
-                <div className="flex justify-center items-center ml-3 xxs:ml-0">
-                    <p className="text-lg text-content3">No errands to be shown</p>
+                <div className="flex justify-center items-center min-h-[48px]">
+                    <p className="text-md text-content3">no errands for now</p>
                 </div>
             ) : (
                 errands.map((errand, index) => {
