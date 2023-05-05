@@ -6,7 +6,7 @@ import { updateErrandDate, deleteErrand } from "@/services/database/errands";
 import ReactDatePicker from '@/components/datepickers/ReactDatePicker';
 
 // ErrandOptions component
-const ErrandOptions: React.FC<{ errandId: string, status: boolean }> = ({ errandId, status }) => {
+const ErrandOptions: React.FC<{ errandId: string }> = ({ errandId }) => {
     // Destructure the updateFlag and toggleUpdateFlag properties from the ErrandsUpdateContext
     const { updateFlag, toggleUpdateFlag } = useContext(ErrandsUpdateContext);
 
@@ -60,14 +60,15 @@ const ErrandOptions: React.FC<{ errandId: string, status: boolean }> = ({ errand
                 <label className="btn btn-ghost flex cursor-pointer px-0" tabIndex={0}>
                     <FontAwesomeIcon icon={faEllipsisV} className="text-green-600 sm:h-4 sm:w-4" />
                 </label>
-                <div className={`dropdown-menu ${status ? "dropdown-menu dropdown-menu-bottom-right" : "dropdown-menu dropdown-menu-bottom-left"} md:dropdown-menu-right`}>
-                    <div tabIndex={-1} className="flex items-center text-sm">
-                        <label htmlFor="date" className="tracking-wide mx-2">Reschedule:</label>
-                        <ReactDatePicker className="input" placeholder="Select Date"
+                <div className="dropdown-menu dropdown-menu-bottom-left w-min xxs:w-[160px] md:w-[230px]">
+                    <div tabIndex={-1} className="flex flex-wrap md:flex-nowrap items-center text-sm mb-1">
+                        <label htmlFor="date" className="tracking-wide mx-2 mb-1 md:mb-0">Reschedule:</label>
+                        <ReactDatePicker className="input w-[110px]" placeholder="Select Date"
                             selected={date}
                             onChange={(date) => setDate(date)} />
                     </div>
-                    <button tabIndex={-1} className="dropdown-item text-sm" onClick={removeErrand}>Delete this Errand</button>
+                    <div className="dropdown-divider" role="separator"></div>
+                    <button tabIndex={-1} className="dropdown-item text-sm mt-2" onClick={removeErrand}>Delete</button>
                 </div>
             </div>
         </div>
