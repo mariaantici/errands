@@ -53,9 +53,9 @@ const ErrandsList: React.FC<{ errands: any[] }> = ({ errands }) => {
                                         checked={errand.status === true}
                                         onChange={() => updateErrand(errand.id, !errand.status)}
                                     />
-                                    <span className="text-md ml-2 tracking-tight">{errand.name}</span>
+                                    <span className={`text-md ml-2 tracking-tight ${errand.name.length > 16 ? 'w-min' : 'w-max'} xxs:w-fit break-words`}>{errand.name}</span>
                                 </label>
-                                <ErrandOptions errandId={errand.id} status={errand.status} />
+                                <ErrandOptions errandId={errand.id} />
                             </div>
                         </div>
                     );
