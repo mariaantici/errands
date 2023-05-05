@@ -92,3 +92,24 @@ export async function updateUser(name: string): Promise<string | null> {
         throw error;
     }
 }
+
+// Fetch user's name from users table
+export async function getName(userId: string): Promise<{ id: string, name: string } | null> {
+    try {
+        const { data, error } = await supabase
+            .from('users')
+            .select('id, name')
+            .eq('id', userId)
+            .single();
+
+        if (error) {
+            throw error;
+        }
+
+        return data;
+
+    } catch (error) {
+        console.error('Error fetching user name', error);
+        throw error;
+    }
+}
