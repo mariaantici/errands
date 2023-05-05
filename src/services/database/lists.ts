@@ -56,3 +56,45 @@ export async function updateListId(userId: string, listId: string, listName: str
         throw error;
     }
 }
+
+// Fetch list_id for user
+export async function fetchListId(userId: string, listName: string): Promise<{ list_id: string } | null> {
+    try {
+        const { data, error } = await supabase
+            .from('lists')
+            .select('list_id')
+            .eq('user_id', userId)
+            .eq('list_name', listName)
+            .single()
+
+        if (error) {
+            throw error;
+        }
+
+        return data;
+
+    } catch (error) {
+        console.error('Error fetching list id', error);
+        throw error;
+    }
+}
+
+// Fetch user_ids for list
+export async function fetchMembersId(listId: string): Promise<{ user_id: string }[] | null> {
+    try {
+        const { data, error } = await supabase
+            .from('lists')
+            .select('user_id')
+            .eq('list_id', listId);
+
+        if (error) {
+            throw error;
+        }
+
+        return data;
+
+    } catch (error) {
+        console.error('Error fetching members id', error);
+        throw error;
+    }
+}
