@@ -22,7 +22,7 @@ export async function getErrands(userId: string, date: string): Promise<{}[] | n
     try {
         const { data, error } = await supabase
             .from('errands')
-            .select('id, list_name, name, status')
+            .select('id, user_id, list_name, name, status')
             .eq('user_id', userId)
             .eq('date', date)
 
