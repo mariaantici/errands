@@ -20,9 +20,6 @@ const TabContent: React.FC = () => {
     // Get the active list from ActiveListContext
     const list = useContext(ActiveListContext);
 
-    // State for managing the list id
-    const [listId, setListId] = useState(null);
-
     // State for managing the members
     const [members, setMembers] = useState([]);
 
@@ -59,7 +56,6 @@ const TabContent: React.FC = () => {
                 // Fetch list id for user
                 try {
                     const data = await fetchListId(userId, list);
-                    setListId(data.list_id);
 
                     if (data.list_id) {
                         // Fetch members for list id
