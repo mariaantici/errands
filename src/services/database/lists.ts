@@ -98,3 +98,25 @@ export async function fetchMembersId(listId: string): Promise<{ user_id: string 
         throw error;
     }
 }
+
+// Check if user is owner of the list
+export async function isOwner(userId: string, listName: string): Promise<{ user_id: string, is_owner: boolean } | null> {
+    try {
+        const { data, error } = await supabase
+            .from('lists')
+            .select('user_id, is_owner')
+            .eq('user_id', userId)
+            .eq('list_name', listName)
+            .single();
+
+        if (error) {
+            throw error;
+        }
+
+        return data;
+
+    } catch (error) {
+        console.error('Error checking if the user is owner', error);
+        throw error;
+    }
+}
