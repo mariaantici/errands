@@ -17,20 +17,7 @@ export async function createDefaultListsForUser(userId: string): Promise<void> {
 
             if (data.length === 0) {
                 // Create new list
-                try {
-                    const { error } = await supabase
-                        .from('lists')
-                        .insert([
-                            { list_name: listName, user_id: userId, is_owner: true },
-                        ]);
-
-                    if (error) {
-                        throw error;
-                    }
-                } catch (error) {
-                    console.error('Error creating default lists', error);
-                    throw error;
-                }
+                await createList(listName, userId);
             }
         } catch (error) {
             console.error('The user already has this list', error);
@@ -79,7 +66,7 @@ export async function fetchListId(userId: string, listName: string): Promise<{ l
     }
 }
 
-// Fetch user_ids for list
+// Fetch user ids for list
 export async function fetchMembersId(listId: string): Promise<{ user_id: string }[] | null> {
     try {
         const { data, error } = await supabase
@@ -117,6 +104,43 @@ export async function isOwner(userId: string, listName: string): Promise<{ user_
 
     } catch (error) {
         console.error('Error checking if the user is owner', error);
+        throw error;
+    }
+}
+
+// Delete list for user
+export async function deleteList(listName: string, userId: string): Promise<void> {
+    try {
+        const { error } = await supabase
+            .from('lists')
+            .delete()
+            .eq('list_name', listName)
+            .eq('user_id', userId);
+
+        if (error) {
+            throw error;
+        }
+
+    } catch (error) {
+        console.error('Error deleting list for user', error);
+        throw error;
+    }
+}
+
+// Create list for user
+export async function createList(listName: string, userId: string): Promise<void> {
+    try {
+        const { error } = await supabase
+            .from('lists')
+            .insert([
+                { list_name: listName, user_id: userId, is_owner: true },
+            ]);
+
+        if (error) {
+            throw error;
+        }
+    } catch (error) {
+        console.error('Error creating list for user', error);
         throw error;
     }
 }
