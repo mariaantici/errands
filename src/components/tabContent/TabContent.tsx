@@ -32,8 +32,16 @@ const TabContent: React.FC = () => {
     // Set state for managing the selected date across the components
     const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
 
+    // State for managing the refresh flag for deleting member
+    const [refreshMembers, setRefreshMembers] = useState(false);
+
     // Declare the state for the update flag and set its initial value to false
     const [updateFlag, setUpdateFlag] = useState(false);
+
+    // Function to toggle the refreshMembers flag when a member is removed
+    const onMemberRemoved = () => {
+        setRefreshMembers(!refreshMembers);
+    };
 
     // Function to toggle the value of the update flag
     const toggleUpdateFlag = () => {
@@ -81,7 +89,7 @@ const TabContent: React.FC = () => {
             setMembers([]);
         };
 
-    }, [userId, list]);
+    }, [userId, list, refreshMembers]);
 
     // Render the TabContent
     return (
@@ -95,7 +103,7 @@ const TabContent: React.FC = () => {
                         <Spinner />
                     </div>
                 ) : (
-                    members.length > 1 ? <ErrandsListsForMember date={selectedDate} key={`${list}-${selectedDate}`} members={members} /> : <ErrandsListsForUser date={selectedDate} key={`${list}-${selectedDate}`} />
+                    members.length > 1 ? <ErrandsListsForMember date={selectedDate} key={`${list}-${selectedDate}`} members={members} onMemberRemoved={onMemberRemoved} /> : <ErrandsListsForUser date={selectedDate} key={`${list}-${selectedDate}`} />
                 )}
                 <AddErrandButton />
                 <RecommendedErrands />
