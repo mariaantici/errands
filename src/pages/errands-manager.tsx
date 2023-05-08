@@ -8,7 +8,7 @@ import Spinner from '@/components/common/Spinner';
 import Navbar from "@/components/Navbar";
 import Tabs from "@/components/Tabs";
 import TabContent from "@/components/tabContent/TabContent";
-import InputName from "@/components/userLogic/InputName";
+import InputNameModal from "@/components/userLogic/InputNameModal";
 
 // ErrandsManager component
 const ErrandsManager: React.FC = () => {
@@ -79,7 +79,7 @@ const ErrandsManager: React.FC = () => {
                 <>
                     <Navbar />
                     <main className="max-w-5xl mx-auto">
-                        <InputName isOpen={isOpen} />
+                        <InputNameModal isOpen={isOpen} />
                         <Tabs onTabChange={setActiveTab} activeTab={activeTab} />
                         <UserIdContext.Provider value={userId}>
                             <ActiveListContext.Provider value={activeTab}>

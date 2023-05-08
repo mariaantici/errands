@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { updateUser } from "@/services/database/users";
 import { Alert } from '@/components/Alert';
 
-// InputName component
-const InputName: React.FC<{ isOpen?: boolean }> = ({ isOpen = false }) => {
+// InputNameModal component
+const InputNameModal: React.FC<{ isOpen?: boolean }> = ({ isOpen = false }) => {
     // State to handle the input value of the name field
     const [name, setName] = useState("");
     const [isModalOpen, setIsModalOpen] = useState<boolean>(isOpen);
@@ -34,7 +34,7 @@ const InputName: React.FC<{ isOpen?: boolean }> = ({ isOpen = false }) => {
         }
     };
 
-    // Render InputName
+    // Render InputNameModal
     return (
         <>
             {alert && (
@@ -79,4 +79,4 @@ const InputName: React.FC<{ isOpen?: boolean }> = ({ isOpen = false }) => {
     );
 };
 
-export default InputName;
+export default InputNameModal;
