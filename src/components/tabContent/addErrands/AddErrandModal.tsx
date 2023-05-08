@@ -6,8 +6,8 @@ import { createErrand } from '@/services/database/errands';
 import { Alert } from '@/components/Alert';
 import ReactDatePicker from '@/components/datepickers/ReactDatePicker';
 
-// AddErrandForm component
-const AddErrandForm: React.FC<{ modalId: string, recommendedName?: string }> = ({ modalId, recommendedName = "" }) => {
+// AddErrandModal component
+const AddErrandModal: React.FC<{ modalId: string, recommendedName?: string }> = ({ modalId, recommendedName = "" }) => {
     // Get the userId from the UserIdContext
     const userId = useContext(UserIdContext);
 
@@ -73,7 +73,7 @@ const AddErrandForm: React.FC<{ modalId: string, recommendedName?: string }> = (
         setList(activeList !== 'all' ? activeList : 'household');
     }, [activeList]);
 
-    // Render AddErrandForm
+    // Render AddErrandModal
     return (
         <>
             {alert && (
@@ -130,4 +130,4 @@ const AddErrandForm: React.FC<{ modalId: string, recommendedName?: string }> = (
     );
 };
 
-export default AddErrandForm;
+export default AddErrandModal;

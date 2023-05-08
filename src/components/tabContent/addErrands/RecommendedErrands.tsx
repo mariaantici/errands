@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import ActiveListContext from "@/contexts/ActiveListContext";
-import AddErrandForm from "@/components/tabContent/addErrands/AddErrandForm";
+import AddErrandModal from "@/components/tabContent/addErrands/AddErrandModal";
 
 // List of sample errands
 const recommendedErrands: { list: string, errands: string[] }[] = [
@@ -49,7 +49,7 @@ const RecommendedErrands: React.FC = () => {
                             <label htmlFor={uniqueModalId} className="btn btn-outline-success rounded-full text-content1">
                                 {errand}
                             </label>
-                            < AddErrandForm modalId={uniqueModalId} recommendedName={errand} />
+                            < AddErrandModal modalId={uniqueModalId} recommendedName={errand} />
                         </React.Fragment>
                     );
                 })}
