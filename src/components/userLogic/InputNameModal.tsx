@@ -1,11 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { updateUser } from "@/services/database/users";
+import * as Yup from 'yup';
 import { Alert } from '@/components/Alert';
+import ModalComponent from "@/components/common/Form/ModalComponent";
+import InputField from '@/components/common/Form/InputField';
+
+// Define the initial values
+const initialValues = { name: '' }
+
+// Define the form validation schema using Yup
+const validationSchema = Yup.object().shape({
+    name: Yup.string()
+        .min(2, 'Name must be at least 2 characters')
+        .required('Name is required'),
+});
 
 // InputNameModal component
 const InputNameModal: React.FC<{ isOpen?: boolean }> = ({ isOpen = false }) => {
     // State to handle the input value of the name field
-    const [name, setName] = useState("");
     const [isModalOpen, setIsModalOpen] = useState<boolean>(isOpen);
 
     // State to handle the alerts
@@ -17,19 +29,15 @@ const InputNameModal: React.FC<{ isOpen?: boolean }> = ({ isOpen = false }) => {
     }, [isOpen]);
 
     // Function to update the user's name, called on form submit
-    const updateName = async (event: React.FormEvent) => {
-        event.preventDefault();
+    const updateName = async (values: { name: string }) => {
         try {
-            await updateUser(name);
+            await updateUser(values.name);
             setAlert({ title: 'Success', message: 'Name updated successfully', type: 'success' });
             setAlertKey(Date.now());
         } catch (error) {
             setAlert({ title: 'Error', message: error.message, type: 'error' });
             setAlertKey(Date.now());
-        }
-
-        // Close modal only if the name has a certain length
-        if (name.length > 1) {
+        } finally {
             setIsModalOpen(false);
         }
     };
@@ -47,34 +55,21 @@ const InputNameModal: React.FC<{ isOpen?: boolean }> = ({ isOpen = false }) => {
             )}
             {isModalOpen && (
                 <input className="modal-state" id="modalId" type="checkbox" defaultChecked />
-            )}            <div className="modal">
-                <label className="modal-overlay"></label>
-                <form onSubmit={updateName}>
-                    <div className="modal-content flex flex-col gap-7 min-w-[340px] xs:min-w-[360px]">
-                        <div className="text-left">
-                            <h2 className="text-2xl font-pacifico mb-2">Name</h2>
-                            <p className="text-sm text-green-600 tracking-wide">no need for a full name, a nickname will do</p>
-                        </div>
-                        <div className="space-y-1">
-                            <label htmlFor="name" className="tracking-wide">
-                                Name
-                            </label>
-                            <input
-                                className="input"
-                                placeholder="Enter your name"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)} // Update the name state when the input value changes
-                            />
-                            <div className="h-1">
-                                {(name.length < 2 && name.length !== 0) && <p className="text-xs text-red-600">Name must have at least 2 characters</p>}
-                            </div>
-                        </div>
-                        <button className="btn btn-outline-success rounded-3xl w-full" type="submit">
-                            Save Name
-                        </button>
-                    </div>
-                </form>
-            </div>
+            )}
+            <ModalComponent
+                header="Name"
+                description="no need for a full name, a nickname will do"
+                initialValues={initialValues}
+                validationSchema={validationSchema}
+                handleSubmit={updateName}
+                buttonText="Save Name"
+            >
+                <InputField
+                    field="name"
+                    fieldName="Appelative"
+                    fieldPlaceholder="Write it here"
+                />
+            </ModalComponent>
         </>
     );
 };
