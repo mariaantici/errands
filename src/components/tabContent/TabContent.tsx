@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { fetchListId, fetchMembersId } from '@/services/database/lists';
+import { getName } from "@/services/database/users";
 import UserIdContext from "@/contexts/UserIdContext";
 import ActiveListContext from "@/contexts/ActiveListContext";
 import ErrandsUpdateContext from '@/contexts/ErrandsUpdateContext';
@@ -11,6 +12,7 @@ import ErrandsListsForMember from './showErrands/ErrandsListsForMember';
 import ErrandsListsForUser from '@/components/tabContent/showErrands/ErrandsListsForUser';
 import AddErrandButton from '@/components/tabContent/addErrands/AddErrandButton';
 import RecommendedErrands from '@/components/tabContent/addErrands/RecommendedErrands';
+import MembersNamesContext from '@/contexts/MembersNamesContext';
 
 // TabContent component
 const TabContent: React.FC = () => {
@@ -22,6 +24,9 @@ const TabContent: React.FC = () => {
 
     // State for managing the members
     const [members, setMembers] = useState([]);
+
+    // State to handle fetched names for members
+    const [membersNames, setMembersNames] = useState([]);
 
     // State for managing the loading status
     const [loading, setLoading] = useState(true);
@@ -87,6 +92,26 @@ const TabContent: React.FC = () => {
 
     }, [userId, list, refreshMembers]);
 
+    useEffect(() => {
+        if (members.length > 1) {
+            // Fetch name for each member
+            const fetchMemberName = async (memberId: string) => {
+                try {
+                    const data = await getName(memberId);
+                    setMembersNames((prevMembersNames) => [...prevMembersNames, data]);
+
+                } catch (error) {
+                    throw error;
+                }
+            };
+
+            // Reset the states before accumulating new data
+            setMembersNames([]);
+
+            Promise.all(members.map((member) => fetchMemberName(member.user_id)));
+        }
+    }, [members]);
+
     // Render the TabContent
     return (
         <>
@@ -94,15 +119,19 @@ const TabContent: React.FC = () => {
             <DatePicker selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
             <ShowSelectedDate date={selectedDate} />
             <ErrandsUpdateContext.Provider value={{ updateFlag, toggleUpdateFlag }}>
-                {loading ? (
-                    <div className="flex justify-center items-center h-24">
-                        <Spinner />
-                    </div>
-                ) : (
-                    members.length > 1 ? <ErrandsListsForMember date={selectedDate} key={`${list}-${selectedDate}`} members={members} onMemberRemoved={onMemberRemoved} /> : <ErrandsListsForUser date={selectedDate} key={`${list}-${selectedDate}`} />
-                )}
-                <AddErrandButton />
-                <RecommendedErrands />
+                <MembersNamesContext.Provider value={membersNames}>
+                    {loading ? (
+                        <div className="flex justify-center items-center h-24">
+                            <Spinner />
+                        </div>
+                    ) : (
+                        members.length > 1
+                            ? <ErrandsListsForMember date={selectedDate} members={members} onMemberRemoved={onMemberRemoved} key={`${list}-${selectedDate}`} />
+                            : <ErrandsListsForUser date={selectedDate} key={`${list}-${selectedDate}`} />
+                    )}
+                    <AddErrandButton />
+                    <RecommendedErrands />
+                </MembersNamesContext.Provider>
             </ErrandsUpdateContext.Provider>
         </>
     );

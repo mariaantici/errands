@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
 import UserIdContext from "@/contexts/UserIdContext";
 import ActiveListContext from "@/contexts/ActiveListContext";
+import MembersNamesContext from '@/contexts/MembersNamesContext';
 import ErrandsUpdateContext from "@/contexts/ErrandsUpdateContext";
 import { getErrands } from "@/services/database/errands"
-import { getName } from "@/services/database/users";
 import { isOwner } from "@/services/database/lists";
 import { Alert } from "@/components/Alert";
 import Spinner from "@/components/common/Spinner";
@@ -18,14 +18,14 @@ const ErrandsListsForMember: React.FC<{ date: Date, members: any[], onMemberRemo
     // Get the active list from ActiveListContext
     const list = useContext(ActiveListContext);
 
+    // Get the members names array from MembersNamesContext
+    const membersNames = useContext(MembersNamesContext);
+
     // Destructure the updateFlag and toggleUpdateFlag properties from the ErrandsUpdateContext
     const { updateFlag, toggleUpdateFlag } = useContext(ErrandsUpdateContext);
 
     // State to handle fetched errands data
     const [errandsData, setErrandsData] = useState([[]]);
-
-    // State to handle fetched names for members
-    const [membersNames, setMembersNames] = useState([]);
 
     // State to handle the ownership of members
     const [ownership, setOwnership] = useState([]);
@@ -63,15 +63,13 @@ const ErrandsListsForMember: React.FC<{ date: Date, members: any[], onMemberRemo
     const userOwns = ownership.find(o => o.user_id === userId)?.is_owner;
 
     useEffect(() => {
-        // Fetch errands for each member
-        const fetchErrandsNamesAndOwneship = async (memberId: string) => {
+        // Fetch errands for ownership for members
+        const fetchErrandsAndOwneship = async (memberId: string) => {
             try {
                 const errands = await getErrands(memberId, formattedDate);
-                const name = await getName(memberId);
                 const owner = await isOwner(userId, list);
 
                 setErrandsData((prevErrandsData) => [...prevErrandsData, errands]);
-                setMembersNames((prevMembersNames) => [...prevMembersNames, name]);
                 setOwnership((prevOwners) => [...prevOwners, owner]);
 
             } catch (error) {
@@ -84,10 +82,9 @@ const ErrandsListsForMember: React.FC<{ date: Date, members: any[], onMemberRemo
 
         // Reset the states before accumulating new data
         setErrandsData([[]]);
-        setMembersNames([]);
         setOwnership([]);
 
-        Promise.all(members.map((member) => fetchErrandsNamesAndOwneship(member.user_id))).then(() => setLoading(false));
+        Promise.all(members.map((member) => fetchErrandsAndOwneship(member.user_id))).then(() => setLoading(false));
 
     }, [members, formattedDate, updateFlag]);
 
