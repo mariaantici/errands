@@ -20,8 +20,8 @@ const TabContent: React.FC = () => {
     // Get the active list from ActiveListContext
     const list = useContext(ActiveListContext);
 
-    // State for managing the members
-    const [members, setMembers] = useState([]);
+    // State for managing fetched members for all the lists
+    const [listsMembers, setListsMembers] = useState({});
 
     // State for managing the loading status
     const [loading, setLoading] = useState(true);
@@ -46,40 +46,53 @@ const TabContent: React.FC = () => {
         setUpdateFlag(!updateFlag);
     };
 
-    useEffect(() => {
-        setLoading(true);
+    // Function to fetch all members for the current user's lists
+    const fetchAllMembers = async (userId: string) => {
+        const lists = ['household', 'trip', 'workplace'];
+        let listsMembers = {};
 
-        if (list !== "all" && userId) {
-            const fetchData = async () => {
-
-                // Fetch list id for user
-                try {
-                    const data = await fetchListId(userId, list);
-                    if (data.list_id) {
-                        // Fetch members for list id
-                        try {
-                            const membersIds = await fetchMembersId(data.list_id);
-                            setMembers(membersIds);
-                            setLoading(false);
-                        } catch (error) {
-                            throw error;
+        // Function to fetch the list id and members for a specific list
+        const fetchDataForList = async (list: string) => {
+            try {
+                const data = await fetchListId(userId, list);
+                if (data.list_id) {
+                    try {
+                        const membersIds = await fetchMembersId(data.list_id);
+                        // If there is more than one member in the list, save members
+                        if (membersIds.length > 1) {
+                            listsMembers[list] = membersIds;
                         }
+                    } catch (error) {
+                        throw error;
                     }
-                } catch (error) {
-                    throw error;
                 }
-            };
-            fetchData();
-        } else {
-            setLoading(false);
+            } catch (error) {
+                throw error;
+            }
+        };
+        // Wait for the array of promises to fetch data for each list
+        try {
+            await Promise.all(lists.map((list) => fetchDataForList(list)));
+        } catch (error) {
+            throw error;
         }
 
-        // Cleanup function
-        return () => {
-            setMembers([]);
-        };
+        return listsMembers;
+    };
 
-    }, [userId, list, refreshMembers]);
+    // Fetch members data when the component mounts and whenever userId or refreshMembers change
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const data = await fetchAllMembers(userId);
+                setListsMembers(data);
+                setLoading(false);
+            } catch (error) {
+                throw error;
+            }
+        };
+        fetchData();
+    }, [userId, refreshMembers]);
 
     // Render the TabContent
     return (
@@ -88,14 +101,16 @@ const TabContent: React.FC = () => {
             <DatePicker selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
             <ShowSelectedDate date={selectedDate} />
             <ErrandsUpdateContext.Provider value={{ updateFlag, toggleUpdateFlag }}>
-                {loading ? (
+                {loading && list !== "all" ? (
                     <div className="flex justify-center items-center h-24">
                         <Spinner />
                     </div>
                 ) : (
-                    members.length > 1
-                        ? <ErrandsListsForMember date={selectedDate} members={members} onMemberRemoved={onMemberRemoved} key={`${list}-${selectedDate}`} />
-                        : <ErrandsListsForUser date={selectedDate} key={`${list}-${selectedDate}`} />
+                    list === "all"
+                        ? <ErrandsListsForUser date={selectedDate} key={`${list}-${selectedDate}`} />
+                        : listsMembers[list]
+                            ? <ErrandsListsForMember date={selectedDate} members={listsMembers[list]} onMemberRemoved={onMemberRemoved} key={`${list}-${selectedDate}`} />
+                            : <ErrandsListsForUser date={selectedDate} key={`${list}-${selectedDate}`} />
                 )}
                 <AddErrandButton />
                 <RecommendedErrands />
