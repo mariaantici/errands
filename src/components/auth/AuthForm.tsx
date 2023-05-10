@@ -36,7 +36,7 @@ const AuthForm: React.FC = () => {
 
                     // Create the user in users table
                     try {
-                        await createUser(userId);
+                        await createUser(userId, values.email);
                     } catch (error) {
                         let alertType = 'error';
                         setAlert({ title: 'Error', message: error.message, type: alertType });

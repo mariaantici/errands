@@ -1,6 +1,7 @@
 // Represents a user in the application
 export interface User {
     id: string; // User's ID from auth.users
+    email: string; // Email of the user
     name: string | null; // Name of the user
     created_at: Date; // Timestamp when the user was created
 }

@@ -20,11 +20,11 @@ export async function getUserData(): Promise<SupabaseUser | null> {
 }
 
 // Create new user in users table based on the user's id
-export async function createUser(userId: string): Promise<void> {
+export async function createUser(userId: string, email: string): Promise<void> {
     try {
         const { error } = await supabase
             .from('users')
-            .insert({ id: userId });
+            .insert({ id: userId, email: email });
 
         if (error) {
             throw error;
