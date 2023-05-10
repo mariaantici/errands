@@ -7,6 +7,7 @@ import Spinner from '@/components/common/Spinner';
 import DatePickerMobile from '@/components/datepickers/DatePickerMobile';
 import DatePicker from '@/components/datepickers/DatePicker';
 import ShowSelectedDate from '@/components/tabContent/ShowSelectedDate';
+import AddMemberButton from '@/components/tabContent/addMembers/AddMemberButton';
 import ErrandsListsForMember from '@/components/tabContent/showErrands/ErrandsListsForMember';
 import ErrandsListsForUser from '@/components/tabContent/showErrands/ErrandsListsForUser';
 import AddErrandButton from '@/components/tabContent/addErrands/AddErrandButton';
@@ -99,6 +100,7 @@ const TabContent: React.FC = () => {
         <>
             <DatePickerMobile selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
             <DatePicker selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
+            {list !== "all" && <AddMemberButton />}
             <ShowSelectedDate date={selectedDate} />
             <ErrandsUpdateContext.Provider value={{ updateFlag, toggleUpdateFlag }}>
                 {loading && list !== "all" ? (
