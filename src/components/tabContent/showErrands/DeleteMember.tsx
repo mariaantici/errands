@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { createList, deleteList } from "@/services/database/lists";
 import ActiveListContext from "@/contexts/ActiveListContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserMinus } from "@fortawesome/free-solid-svg-icons";
+import { faPersonCircleMinus } from "@fortawesome/free-solid-svg-icons";
 
 // DeleteMember component
 const DeleteMember: React.FC<{ memberId: string, onMemberRemoved: () => void }> = ({ memberId, onMemberRemoved }) => {
@@ -44,7 +44,7 @@ const DeleteMember: React.FC<{ memberId: string, onMemberRemoved: () => void }> 
     return (
         <div className="popover popover-hover">
             <button className="popover-trigger" onClick={handleRemoveMember}>
-                <FontAwesomeIcon icon={faUserMinus} className="text-red-800 h-5 w-5 ml-2" />
+                <FontAwesomeIcon icon={faPersonCircleMinus} className="text-red-700 h-5 ml-2" />
             </button>
             <div className="popover-content popover-right w-min">
                 <div className="popover-arrow"></div>
