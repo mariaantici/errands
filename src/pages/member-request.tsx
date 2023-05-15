@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getUser } from "@/services/database/users";
-import { fetchRequest } from "@/services/database/member-requests";
+import { deleteRequest, fetchRequest } from "@/services/database/member-requests";
 import { updateListId } from "@/services/database/lists";
 import { useRouter } from 'next/router';
 import { Alert } from "@/components/Alert";
@@ -10,6 +10,9 @@ import Spinner from "@/components/common/Spinner";
 const MemberRequest: React.FC = () => {
     // State to handle user's id
     const [userId, setUserId] = useState(null);
+
+    // State to handle user email
+    const [userEmail, setUserEmail] = useState(null);
 
     // State to handle if there's a member request
     const [hasRequest, setHasRequest] = useState(false);
@@ -23,53 +26,53 @@ const MemberRequest: React.FC = () => {
 
     const router = useRouter();
 
+    // Fetch user's data
+    const fetchUser = async () => {
+        try {
+            const user = await getUser();
+            setUserId(user.id);
+            setUserEmail(user.email);
+
+        } catch (error) {
+            // If the session doesn't exist, navigate to the authentication page
+            router.push('/authentication');
+
+            // Manage errors
+            setAlert({ title: 'Error', message: error.message, type: 'error' });
+            setAlertKey(Date.now());
+        }
+    };
+
+    // Update the user's list id if there's a request
+    const isRequest = async () => {
+        try {
+            const request = await fetchRequest(userEmail);
+
+            if (request) {
+                setHasRequest(true);
+
+                try {
+                    await updateListId(userId, request.list_id, request.list_name);
+                    await deleteRequest(request.id);
+
+                } catch (error) {
+                    setAlert({ title: 'Error', message: error.message, type: 'error' });
+                    setAlertKey(Date.now());
+                }
+            }
+
+        } catch (error) {
+            throw error;
+
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
     useEffect(() => {
         setIsLoading(true);
 
-        // Fetch user's data
-        const fetchUser = async () => {
-            try {
-                const user = await getUser();
-                setUserId(user.id);
-
-            } catch (error) {
-                // If the session doesn't exist, navigate to the authentication page
-                router.push('/authentication');
-
-                // Manage errors
-                setAlert({ title: 'Error', message: error.message, type: 'error' });
-                setAlertKey(Date.now());
-            }
-        };
-
         fetchUser();
-
-        // Update the user's list id if there's a request
-        const isRequest = async () => {
-            try {
-                const request = await fetchRequest(userId);
-
-                if (request) {
-                    setHasRequest(true);
-
-                    console.log(request);
-
-                    try {
-                        await updateListId(userId, request.list_id, request.list_name);
-
-                    } catch (error) {
-                        setAlert({ title: 'Error', message: error.message, type: 'error' });
-                        setAlertKey(Date.now());
-                    }
-                }
-
-            } catch (error) {
-                throw error;
-
-            } finally {
-                setIsLoading(false);
-            }
-        };
 
         if (userId) {
             isRequest();

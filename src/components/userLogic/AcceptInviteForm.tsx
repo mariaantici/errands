@@ -5,9 +5,9 @@ import { updatePassword } from '@/services/auth';
 import { createDefaultListsForUser } from "@/services/database/lists";
 import { useRouter } from 'next/router';
 import { Alert } from "@/components/Alert";
-import Spinner from "../common/Spinner";
-import FormComponent from "../common/Form/FormComponent";
-import InputField from "../common/Form/InputField";
+import Spinner from "@/components/common/Spinner";
+import FormComponent from "@/components/common/Form/FormComponent";
+import InputField from "@/components/common/Form/InputField";
 
 // Define the initial values
 const initialValues = { name: '', password: '' }
@@ -24,8 +24,11 @@ const validationSchema = Yup.object().shape({
 
 // AcceptInviteForm component
 const AcceptInviteForm: React.FC = () => {
-    // State to handle user's id
+    // State to handle user id
     const [userId, setUserId] = useState(null);
+
+    // State to handle user email
+    const [userEmail, setUserEmail] = useState(null);
 
     // State for managing loading state
     const [isLoading, setIsLoading] = useState(true);
@@ -39,7 +42,7 @@ const AcceptInviteForm: React.FC = () => {
     // Create user is users table
     const addUser = async () => {
         try {
-            await createUser(userId);
+            await createUser(userId, userEmail);
         } catch (error) {
             setAlert({ title: 'Error', message: error.message, type: 'error' });
             setAlertKey(Date.now());
@@ -100,6 +103,8 @@ const AcceptInviteForm: React.FC = () => {
             try {
                 const user = await getUserData();
                 setUserId(user.id);
+                setUserEmail(user.email);
+
             } catch (error) {
                 // If the session doesn't exist, navigate to the authentication page
                 router.push('/authentication');
@@ -137,7 +142,7 @@ const AcceptInviteForm: React.FC = () => {
                     initialValues={initialValues}
                     validationSchema={validationSchema}
                     handleSubmit={acceptInvite}
-                    buttonText="Create account"
+                    buttonText="Confirm account"
                 >
                     <div>
                         <InputField
