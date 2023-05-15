@@ -26,3 +26,13 @@ export interface Errand {
     status: boolean; // Indicates if the errand is completed (true) or not (false)
     created_at: Date; // Timestamp when the errand was created
 }
+
+// Represents a user's errand within a list
+export interface MemberRequest {
+    id: string; // ID of the request
+    sender_id: string; // ID of the sender of the invite
+    invitee_email: string; // Email of the invited user
+    list_name: string; // Name of the list the user is invited into
+    list_id: string; // ID of the list the user is invited into
+    created_at: Date; // Timestamp when the member request was created
+}
