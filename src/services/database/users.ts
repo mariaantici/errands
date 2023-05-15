@@ -2,7 +2,7 @@ import { supabase } from '@/utils/supabaseClient';
 import type { User as SupabaseUser } from '@supabase/supabase-js';
 import { User } from '@/services/types';
 
-// Fetch the user's data from Supabase
+// Get the user's data from schema: auth -> users table
 export async function getUserData(): Promise<SupabaseUser | null> {
     try {
         const { data: { user }, error } = await supabase.auth.getUser()
@@ -14,12 +14,20 @@ export async function getUserData(): Promise<SupabaseUser | null> {
         return user;
 
     } catch (error) {
-        console.error('Error fetching user data:', error);
+        console.error('Error fetching user data, the user is not authenticated', error);
         throw error;
     }
 }
 
-// Create new user in users table based on the user's id
+/*
+The methods below use the 'users' table, which is not the same as schema: 'auth' -> 'users' table
+The 'users' table is designed to store non-sensitive user-related information such as the user's id, email, and name.
+This table allows sharing relevant user data with other users without exposing sensitive authentication-related information.
+This approach eliminates the need for admin-level access and provides an additional layer of security by preventing unnecessary access to sensitive data.
+The table is a core component of the user management and sharing features, enabling interactions between users while ensuring the integrity and confidentiality of the user data.
+*/
+
+// Create new user with user id and email, the name is not required
 export async function createUser(userId: string, email: string): Promise<void> {
     try {
         const { error } = await supabase
@@ -31,15 +39,15 @@ export async function createUser(userId: string, email: string): Promise<void> {
         }
 
     } catch (error) {
-        console.error('Error creating new user', error);
+        console.error('Error creating user', error);
         throw error;
     }
 }
 
-// Fetch user from users table
+// Get user
 export async function getUser(): Promise<User | null> {
     try {
-        // Fetch the user's data from Supabase
+        // Get the user id from schema: auth -> users table
         const user = await getUserData();
         let userId: string;
 
@@ -60,15 +68,15 @@ export async function getUser(): Promise<User | null> {
         return data as User;
 
     } catch (error) {
-        console.error('Error fetching user', error);
+        console.error('Error getting user', error);
         throw error;
     }
 }
 
-// Update user name in users table
+// Update user name
 export async function updateUser(name: string): Promise<string | null> {
     try {
-        // Fetch the user's data from Supabase
+        // Get the user id from schema: auth -> users table
         const user = await getUserData();
         let userId: string;
 
@@ -93,7 +101,7 @@ export async function updateUser(name: string): Promise<string | null> {
     }
 }
 
-// Fetch user's name from users table
+// Get user id and name
 export async function getName(userId: string): Promise<{ id: string, name: string } | null> {
     try {
         const { data, error } = await supabase
@@ -109,7 +117,28 @@ export async function getName(userId: string): Promise<{ id: string, name: strin
         return data;
 
     } catch (error) {
-        console.error('Error fetching user name', error);
+        console.error('Error getting user name', error);
+        throw error;
+    }
+}
+
+// Get user id for email
+export async function getIdForEmail(email: string): Promise<string | null> {
+    try {
+        const { data, error } = await supabase
+            .from('users')
+            .select('id')
+            .eq('email', email)
+            .single();
+
+        if (error) {
+            throw error;
+        }
+
+        return data.id;
+
+    } catch (error) {
+        console.error('Error getting user id for email', error);
         throw error;
     }
 }
