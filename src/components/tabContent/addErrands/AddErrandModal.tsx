@@ -173,7 +173,7 @@ const AddErrandModal: React.FC<{ modalId: string, recommendedName?: string }> = 
                 onChange={() => {
                     setModalVisible(!modalVisible);
                     resetForm();
-                    setSelectedList(activeList);
+                    setSelectedList(activeList !== 'all' ? activeList : 'household');
                     setSelectedMember(userId);
                 }}
             />
