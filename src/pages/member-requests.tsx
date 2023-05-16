@@ -52,7 +52,7 @@ const MemberRequests: React.FC = () => {
 
             // Check if requests is not an empty array
             if (requests.length > 0) {
-                // iterate over each request and fetch user data
+                // Iterate over each request and fetch sender data
                 const requestsWithUserData = await Promise.all(requests.map(async (request) => {
                     const senderData = await getNameAndEmail(request.sender_id);
                     return { ...request, senderData };
