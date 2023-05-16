@@ -44,7 +44,7 @@ export async function createUser(userId: string, email: string): Promise<void> {
     }
 }
 
-// Get user
+// Get the logged in user
 export async function getUser(): Promise<User | null> {
     try {
         // Get the user id from schema: auth -> users table
@@ -107,6 +107,27 @@ export async function getName(userId: string): Promise<{ id: string, name: strin
         const { data, error } = await supabase
             .from('users')
             .select('id, name')
+            .eq('id', userId)
+            .single();
+
+        if (error) {
+            throw error;
+        }
+
+        return data;
+
+    } catch (error) {
+        console.error('Error getting user name', error);
+        throw error;
+    }
+}
+
+// Get user name and email for user id
+export async function getNameAndEmail(userId: string): Promise<{ name: string, email: string } | null> {
+    try {
+        const { data, error } = await supabase
+            .from('users')
+            .select('name, email')
             .eq('id', userId)
             .single();
 
