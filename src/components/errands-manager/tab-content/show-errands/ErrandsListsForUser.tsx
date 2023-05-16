@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
+import { getErrands } from "@/services/database/errands"
+import { Alert } from "@/components/common/Alert";
 import UserIdContext from "@/contexts/UserIdContext";
 import ActiveListContext from "@/contexts/ActiveListContext";
 import ErrandsUpdateContext from "@/contexts/ErrandsUpdateContext";
-import { Alert } from "@/components/Alert";
-import { getErrands } from "@/services/database/errands"
-import ErrandsList from "@/components/tabContent/showErrands/ErrandsList";
+import ErrandsList from "@/components/errands-manager/tab-content/show-errands/ErrandsList";
 import Spinner from "@/components/common/Spinner";
 
 // ErrandsListsForUser component

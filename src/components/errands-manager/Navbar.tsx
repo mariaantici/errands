@@ -1,9 +1,22 @@
+import { logout } from '@/services/auth';
+import { useRouter } from 'next/router';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
-import LogoutButton from "@/components/auth/LogoutButton";
 
 // Navbar component
 const Navbar: React.FC = () => {
+    const router = useRouter();
+
+    // Function to handle logout
+    const handleClick = async () => {
+        try {
+            await logout();
+            router.push('/authentication');
+        } catch (error) {
+            alert(error.message);
+        }
+    };
+
     // Render Navbar
     return (
         <div className="h-[108px] xs:h-[96px]">
@@ -24,8 +37,7 @@ const Navbar: React.FC = () => {
                                 <div className="dropdown-menu dropdown-menu-bottom-left">
                                     <a href="/profile" className="dropdown-item text-sm" tabIndex={-1}>Profile</a>
                                     <div className="dropdown-divider" role="separator"></div>
-                                    <LogoutButton />
-                                </div>
+                                    <button tabIndex={-1} className="dropdown-item text-sm" onClick={handleClick}>Log out</button>                                </div>
                             </div>
                         </div>
                     </div>

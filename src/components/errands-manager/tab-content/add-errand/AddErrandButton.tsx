@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
-import AddErrandModal from "@/components/tabContent/addErrands/AddErrandModal";
+import AddErrandModal from "@/components/errands-manager/tab-content/add-errand/AddErrandModal";
 
 // AddErrandButton component
 const AddErrandButton: React.FC = () => {

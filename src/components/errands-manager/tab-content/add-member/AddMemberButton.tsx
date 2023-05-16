@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPersonCirclePlus } from "@fortawesome/free-solid-svg-icons";
-import AddMemberModal from "@/components/tabContent/addMembers/AddMemberModal";
+import AddMemberModal from "@/components/errands-manager/tab-content/add-member/AddMemberModal";
 
 // AddMemberButton component
 const AddMemberButton: React.FC = () => {

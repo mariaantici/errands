@@ -4,14 +4,14 @@ import UserIdContext from "@/contexts/UserIdContext";
 import ActiveListContext from "@/contexts/ActiveListContext";
 import ErrandsUpdateContext from '@/contexts/ErrandsUpdateContext';
 import Spinner from '@/components/common/Spinner';
-import DatePickerMobile from '@/components/datepickers/DatePickerMobile';
-import DatePicker from '@/components/datepickers/DatePicker';
-import ShowSelectedDate from '@/components/tabContent/ShowSelectedDate';
-import AddMemberButton from '@/components/tabContent/addMembers/AddMemberButton';
-import ErrandsListsForMember from '@/components/tabContent/showErrands/ErrandsListsForMember';
-import ErrandsListsForUser from '@/components/tabContent/showErrands/ErrandsListsForUser';
-import AddErrandButton from '@/components/tabContent/addErrands/AddErrandButton';
-import RecommendedErrands from '@/components/tabContent/addErrands/RecommendedErrands';
+import DatePickerMobile from '@/components/errands-manager/tab-content/datepickers/DatePickerMobile';
+import DatePicker from '@/components/errands-manager/tab-content/datepickers/DatePicker';
+import ShowSelectedDate from '@/components/errands-manager/tab-content/datepickers/ShowSelectedDate';
+import AddMemberButton from '@/components/errands-manager/tab-content/add-member/AddMemberButton';
+import ErrandsListsForMember from '@/components/errands-manager/tab-content/show-errands/ErrandsListsForMember';
+import ErrandsListsForUser from '@/components/errands-manager/tab-content/show-errands/ErrandsListsForUser';
+import AddErrandButton from '@/components/errands-manager/tab-content/add-errand/AddErrandButton';
+import RecommendedErrands from '@/components/errands-manager/tab-content/add-errand/RecommendedErrands';
 
 // TabContent component
 const TabContent: React.FC = () => {

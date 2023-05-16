@@ -1,8 +1,9 @@
 import React, { useContext } from "react";
 import { createList, deleteList } from "@/services/database/lists";
-import ActiveListContext from "@/contexts/ActiveListContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPersonCircleMinus } from "@fortawesome/free-solid-svg-icons";
+import ActiveListContext from "@/contexts/ActiveListContext";
+
 
 // DeleteMember component
 const DeleteMember: React.FC<{ memberId: string, onMemberRemoved: () => void }> = ({ memberId, onMemberRemoved }) => {

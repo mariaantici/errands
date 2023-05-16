@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
-import UserIdContext from "@/contexts/UserIdContext";
-import ActiveListContext from "@/contexts/ActiveListContext";
 import { getUser } from "@/services/database/users";
 import { useRouter } from 'next/router';
-import { Alert } from '@/components/Alert';
+import { Alert } from '@/components/common/Alert';
+import UserIdContext from "@/contexts/UserIdContext";
+import ActiveListContext from "@/contexts/ActiveListContext";
 import Spinner from '@/components/common/Spinner';
-import Navbar from "@/components/Navbar";
-import Tabs from "@/components/Tabs";
-import TabContent from "@/components/tabContent/TabContent";
-import InputNameModal from "@/components/userLogic/InputNameModal";
+import Navbar from "@/components/errands-manager/Navbar";
+import Tabs from "@/components/errands-manager/Tabs";
+import TabContent from "@/components/errands-manager/TabContent";
+import InputNameModal from "@/components/errands-manager/InputNameModal";
 
 // ErrandsManager component
 const ErrandsManager: React.FC = () => {

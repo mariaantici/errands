@@ -2,7 +2,7 @@ import { useState } from 'react';
 import * as Yup from 'yup';
 import { updatePassword } from '@/services/auth';
 import { useRouter } from 'next/router';
-import { Alert } from '@/components/Alert';
+import { Alert } from '@/components/common/Alert';
 import FormComponent from '@/components/common/Form/FormComponent';
 import InputField from '@/components/common/Form/InputField';
 

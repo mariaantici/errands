@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
+import * as Yup from 'yup';
+import { supabase } from "@/utils/supabaseClient";
 import { getIdForEmail } from "@/services/database/users";
 import { fetchListId, fetchMembersId } from "@/services/database/lists";
 import { createRequest } from "@/services/database/member-requests";
-import { supabase } from "@/utils/supabaseClient";
-import * as Yup from 'yup';
+import { Alert } from '@/components/common/Alert';
 import UserIdContext from "@/contexts/UserIdContext";
 import ActiveListContext from "@/contexts/ActiveListContext";
-import { Alert } from '@/components/Alert';
 import ModalComponent from "@/components/common/Form/ModalComponent";
 import InputField from '@/components/common/Form/InputField';
 

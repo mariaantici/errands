@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { updateUser } from "@/services/database/users";
 import * as Yup from 'yup';
-import { Alert } from '@/components/Alert';
+import { Alert } from '@/components/common/Alert';
 import ModalComponent from "@/components/common/Form/ModalComponent";
 import InputField from '@/components/common/Form/InputField';
 

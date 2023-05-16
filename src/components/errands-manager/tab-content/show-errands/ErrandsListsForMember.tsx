@@ -2,13 +2,13 @@ import React, { useState, useEffect, useContext } from "react";
 import { getErrands } from "@/services/database/errands"
 import { getName } from "@/services/database/users";
 import { isOwner } from "@/services/database/lists";
+import { Alert } from "@/components/common/Alert";
 import UserIdContext from "@/contexts/UserIdContext";
 import ActiveListContext from "@/contexts/ActiveListContext";
 import ErrandsUpdateContext from "@/contexts/ErrandsUpdateContext";
-import { Alert } from "@/components/Alert";
 import Spinner from "@/components/common/Spinner";
-import ErrandsList from "@/components/tabContent/showErrands/ErrandsList";
-import DeleteMember from "@/components/tabContent/showErrands/DeleteMember";
+import ErrandsList from "@/components/errands-manager/tab-content/show-errands/ErrandsList";
+import DeleteMember from "@/components/errands-manager/tab-content/show-errands/DeleteMember";
 
 // ErrandsListsForMember component
 const ErrandsListsForMember: React.FC<{ date: Date, members: any[], onMemberRemoved: () => void }> = ({ date, members, onMemberRemoved }) => {

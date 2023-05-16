@@ -4,7 +4,7 @@ import { createUser, getUserData, updateUser } from "@/services/database/users";
 import { updatePassword } from '@/services/auth';
 import { createDefaultListsForUser } from "@/services/database/lists";
 import { useRouter } from 'next/router';
-import { Alert } from "@/components/Alert";
+import { Alert } from "@/components/common/Alert";
 import Spinner from "@/components/common/Spinner";
 import FormComponent from "@/components/common/Form/FormComponent";
 import InputField from "@/components/common/Form/InputField";

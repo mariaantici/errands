@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useContext } from 'react';
+import * as Yup from 'yup';
+import { useFormik } from 'formik';
 import { getName } from '@/services/database/users';
 import { fetchListId, fetchMembersId } from '@/services/database/lists';
 import { createErrand } from '@/services/database/errands';
-import * as Yup from 'yup';
-import { useFormik } from 'formik';
+import { Alert } from '@/components/common/Alert';
 import UserIdContext from "@/contexts/UserIdContext";
 import ActiveListContext from "@/contexts/ActiveListContext";
 import ErrandsUpdateContext from "@/contexts/ErrandsUpdateContext";
-import ReactDatePicker from '@/components/datepickers/ReactDatePicker';
-import { Alert } from '@/components/Alert';
+import ReactDatePicker from '@/components/errands-manager/tab-content/datepickers/ReactDatePicker';
 
 // Validation schema for the form
 const validationSchema = Yup.object().shape({

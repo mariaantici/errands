@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import ActiveListContext from "@/contexts/ActiveListContext";
-import AddErrandModal from "@/components/tabContent/addErrands/AddErrandModal";
+import AddErrandModal from "@/components/errands-manager/tab-content/add-errand/AddErrandModal";
 
-// List of sample errands
+// List of recommended errands
 const recommendedErrands: { list: string, errands: string[] }[] = [
     {
         list: 'household',

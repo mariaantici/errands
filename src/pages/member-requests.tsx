@@ -5,7 +5,7 @@ import { updateListId } from "@/services/database/lists";
 import { useRouter } from 'next/router';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleArrowRight } from '@fortawesome/free-solid-svg-icons';
-import { Alert } from "@/components/Alert";
+import { Alert } from "@/components/common/Alert";
 import Spinner from "@/components/common/Spinner";
 
 // MemberRequests component

@@ -1,9 +1,9 @@
 import React, { useState, useContext, useEffect } from "react";
-import ErrandsUpdateContext from "@/contexts/ErrandsUpdateContext";
+import { updateErrandDate, deleteErrand } from "@/services/database/errands";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsisV } from "@fortawesome/free-solid-svg-icons";
-import { updateErrandDate, deleteErrand } from "@/services/database/errands";
-import ReactDatePicker from '@/components/datepickers/ReactDatePicker';
+import ErrandsUpdateContext from "@/contexts/ErrandsUpdateContext";
+import ReactDatePicker from '@/components/errands-manager/tab-content/datepickers/ReactDatePicker';
 
 // ErrandOptions component
 const ErrandOptions: React.FC<{ errandId: string }> = ({ errandId }) => {

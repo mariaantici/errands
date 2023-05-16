@@ -1,8 +1,8 @@
 import { useState, useContext } from "react";
-import ErrandsUpdateContext from "@/contexts/ErrandsUpdateContext";
 import { updateErrandStatus } from "@/services/database/errands";
-import { Alert } from "@/components/Alert";
-import ErrandOptions from "./ErrandOptions";
+import { Alert } from "@/components/common/Alert";
+import ErrandsUpdateContext from "@/contexts/ErrandsUpdateContext";
+import ErrandOptions from "@/components/errands-manager/tab-content/show-errands/ErrandOptions";
 
 // ErrandsList component
 const ErrandsList: React.FC<{ errands: any[] }> = ({ errands }) => {

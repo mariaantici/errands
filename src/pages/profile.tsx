@@ -4,7 +4,7 @@ import { updateUser } from "@/services/database/users";
 import { updatePassword } from '@/services/auth';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import { Alert } from "@/components/Alert";
+import { Alert } from "@/components/common/Alert";
 import FormComponent from "@/components/common/Form/FormComponent";
 import InputField from "@/components/common/Form/InputField";
 

@@ -5,7 +5,7 @@ import { login, register, resetPassword } from '@/services/auth';
 import { createUser } from '@/services/database/users';
 import { createDefaultListsForUser } from '@/services/database/lists'
 import { useRouter } from 'next/router';
-import { Alert } from '@/components/Alert';
+import { Alert } from '@/components/common/Alert';
 import InputField from '@/components/common/Form/InputField';
 
 // Form validation schema using Yup
