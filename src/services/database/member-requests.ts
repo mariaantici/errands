@@ -18,20 +18,19 @@ export async function createRequest(senderId: string, inviteeEmail: string, list
     }
 }
 
-// Fetch the member request
-export async function fetchRequest(email: string): Promise<MemberRequest | null> {
+// Fetch the member requests
+export async function getRequests(email: string): Promise<MemberRequest[] | null> {
     try {
         const { data, error } = await supabase
             .from('member-requests')
             .select('*')
-            .eq('invitee_email', email)
-            .single();
+            .eq('invitee_email', email);
 
         if (error) {
             throw error;
         }
 
-        return data as MemberRequest;
+        return data as MemberRequest[];
 
     } catch (error) {
         console.error('Error fetching member request', error);
