@@ -101,12 +101,12 @@ export async function updateUser(name: string): Promise<string | null> {
     }
 }
 
-// Get user id and name
-export async function getName(userId: string): Promise<{ id: string, name: string } | null> {
+// Get name for user id
+export async function getName(userId: string): Promise<string | null> {
     try {
         const { data, error } = await supabase
             .from('users')
-            .select('id, name')
+            .select('name')
             .eq('id', userId)
             .single();
 
@@ -114,7 +114,7 @@ export async function getName(userId: string): Promise<{ id: string, name: strin
             throw error;
         }
 
-        return data;
+        return data.name;
 
     } catch (error) {
         console.error('Error getting user name', error);
