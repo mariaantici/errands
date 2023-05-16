@@ -8,8 +8,8 @@ import { faCircleArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { Alert } from "@/components/Alert";
 import Spinner from "@/components/common/Spinner";
 
-// MemberRequest component
-const MemberRequest: React.FC = () => {
+// MemberRequests component
+const MemberRequests: React.FC = () => {
     // State to handle user's id
     const [userId, setUserId] = useState(null);
 
@@ -117,7 +117,7 @@ const MemberRequest: React.FC = () => {
         }
     }
 
-    // Render the MemberRequest
+    // Render the MemberRequests
     return (
         <>
             {alert && (
@@ -200,4 +200,4 @@ const MemberRequest: React.FC = () => {
     );
 };
 
-export default MemberRequest;
+export default MemberRequests;

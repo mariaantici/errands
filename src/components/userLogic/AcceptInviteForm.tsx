@@ -86,7 +86,7 @@ const AcceptInviteForm: React.FC = () => {
             await createDefaultListsForUser(userId);
 
             // Redirect to member request
-            router.push("/member-request");
+            router.push("/member-requests");
         } catch (error) {
             setAlert({ title: "Error", message: error.message, type: "error" });
             setAlertKey(Date.now());
