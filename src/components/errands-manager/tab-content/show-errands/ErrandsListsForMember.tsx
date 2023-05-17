@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { getErrands } from "@/services/database/errands"
 import { getName } from "@/services/database/users";
-import { isOwner } from "@/services/database/lists";
+import { getIsOwner } from "@/services/database/lists";
 import { Alert } from "@/components/common/Alert";
 import UserIdContext from "@/contexts/UserIdContext";
 import ActiveListContext from "@/contexts/ActiveListContext";
@@ -24,12 +24,6 @@ const ErrandsListsForMember: React.FC<{ date: Date, members: any[], onMemberRemo
     // State to handle fetched errands data
     const [errandsData, setErrandsData] = useState([[]]);
 
-    // State to handle fetched names for members
-    const [membersNames, setMembersNames] = useState([]);
-
-    // State to handle the ownership of members
-    const [ownership, setOwnership] = useState([]);
-
     // State for managing the loading status
     const [loading, setLoading] = useState(true);
 
@@ -42,6 +36,25 @@ const ErrandsListsForMember: React.FC<{ date: Date, members: any[], onMemberRemo
     const month = ('0' + (date.getMonth() + 1)).slice(-2);
     const day = ('0' + date.getDate()).slice(-2);
     const formattedDate = `${year}-${month}-${day}`;
+
+    // Fetch errands, names and ownership for members
+    const fetchErrandsNameAndOwneship = async (member: any) => {
+        try {
+            const errands = await getErrands(member.user_id, formattedDate);
+            const name = await getName(member.user_id);
+            const owner = await getIsOwner(member.user_id, list);
+
+            setErrandsData((prevErrandsData) => [...prevErrandsData, errands]);
+
+            // Add name and is_owner to member
+            member.name = name;
+            member.isOwner = owner;
+
+        } catch (error) {
+            setAlert({ title: 'Error', message: error.message, type: 'error' });
+            setAlertKey(Date.now());
+        }
+    };
 
     // Function to filter retrieved errands based on the member's id
     const filterErrandsByMember = (memberId: string) => {
@@ -59,37 +72,19 @@ const ErrandsListsForMember: React.FC<{ date: Date, members: any[], onMemberRemo
         return errands.filter((errand) => errand.list_name === list);
     };
 
-    // Find if user is owner of the list
-    const userOwns = ownership.find(o => o.user_id === userId)?.is_owner;
-
     useEffect(() => {
-        // Fetch errands, names and ownership for members
-        const fetchErrandsNameAndOwneship = async (memberId: string) => {
-            try {
-                const errands = await getErrands(memberId, formattedDate);
-                const name = await getName(memberId);
-                const owner = await isOwner(userId, list);
-
-                setErrandsData((prevErrandsData) => [...prevErrandsData, errands]);
-                setMembersNames((prevMembersNames) => [...prevMembersNames, name]);
-                setOwnership((prevOwners) => [...prevOwners, owner]);
-
-            } catch (error) {
-                setAlert({ title: 'Error', message: error.message, type: 'error' });
-                setAlertKey(Date.now());
-            }
-        };
 
         setLoading(true);
 
-        // Reset the states before accumulating new data
+        // Reset the errands state before accumulating new data
         setErrandsData([[]]);
-        setMembersNames([]);
-        setOwnership([]);
 
-        Promise.all(members.map((member) => fetchErrandsNameAndOwneship(member.user_id))).then(() => setLoading(false));
+        Promise.all(members.map((member) => fetchErrandsNameAndOwneship(member))).then(() => setLoading(false));
 
     }, [members, formattedDate, updateFlag]);
+
+    // Find if user is owner of the list
+    const userOwns = members.find(member => member.user_id === userId)?.isOwner ?? false;
 
     // Render the ErrandsListsForMember
     return (
@@ -118,12 +113,9 @@ const ErrandsListsForMember: React.FC<{ date: Date, members: any[], onMemberRemo
                                     <div className="flex flex-col items-center w-[300px]">
                                         <div className="flex items-center mb-3">
                                             <h2 className="font-pacifico text-lg text-green-600">
-                                                {
-                                                    membersNames.find(memberName => memberName.id === member.user_id)?.name
-                                                    || 'Loading...'
-                                                }
+                                                {member.name || 'Loading...'}
                                             </h2>
-                                            {(userOwns || userId === member.user_id) && <DeleteMember memberId={member.user_id} onMemberRemoved={onMemberRemoved} />}
+                                            {(userOwns || userId === member.user_id) && <DeleteMember member={member} members={members} onMemberRemoved={onMemberRemoved} />}
                                         </div>
                                         <ErrandsList errands={[
                                             ...filteredErrands.filter((errand) => errand.status === false),
