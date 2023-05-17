@@ -73,35 +73,7 @@ export async function getUser(): Promise<User | null> {
     }
 }
 
-// Update user name
-export async function updateUser(name: string): Promise<string | null> {
-    try {
-        // Get the user id from schema: auth -> users table
-        const user = await getUserData();
-        let userId: string;
-
-        if (user) {
-            userId = user.id;
-        }
-
-        const { data, error } = await supabase
-            .from('users')
-            .update({ 'name': name })
-            .eq('id', userId);
-
-        if (error) {
-            throw error;
-        }
-
-        return data;
-
-    } catch (error) {
-        console.error('Error updating user name', error);
-        throw error;
-    }
-}
-
-// Get name for user id
+// Get name for user_id
 export async function getName(userId: string): Promise<string | null> {
     try {
         const { data, error } = await supabase
@@ -122,7 +94,28 @@ export async function getName(userId: string): Promise<string | null> {
     }
 }
 
-// Get user name and email for user id
+// Get user id and name for user_id
+export async function getIdAndName(userId: string): Promise<{ id: string, name: string } | null> {
+    try {
+        const { data, error } = await supabase
+            .from('users')
+            .select('id, name')
+            .eq('id', userId)
+            .single();
+
+        if (error) {
+            throw error;
+        }
+
+        return data;
+
+    } catch (error) {
+        console.error('Error getting user id and name', error);
+        throw error;
+    }
+}
+
+// Get user name and email for user_id
 export async function getNameAndEmail(userId: string): Promise<{ name: string, email: string } | null> {
     try {
         const { data, error } = await supabase
@@ -160,6 +153,34 @@ export async function getIdForEmail(email: string): Promise<string | null> {
 
     } catch (error) {
         console.error('Error getting user id for email', error);
+        throw error;
+    }
+}
+
+// Update user name
+export async function updateUser(name: string): Promise<string | null> {
+    try {
+        // Get the user id from schema: auth -> users table
+        const user = await getUserData();
+        let userId: string;
+
+        if (user) {
+            userId = user.id;
+        }
+
+        const { data, error } = await supabase
+            .from('users')
+            .update({ 'name': name })
+            .eq('id', userId);
+
+        if (error) {
+            throw error;
+        }
+
+        return data;
+
+    } catch (error) {
+        console.error('Error updating user name', error);
         throw error;
     }
 }
