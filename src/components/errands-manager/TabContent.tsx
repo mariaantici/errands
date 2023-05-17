@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { fetchListId, fetchMembersId } from '@/services/database/lists';
+import { getListId, getMembersId } from '@/services/database/lists';
 import UserIdContext from "@/contexts/UserIdContext";
 import ActiveListContext from "@/contexts/ActiveListContext";
 import ErrandsUpdateContext from '@/contexts/ErrandsUpdateContext';
@@ -55,10 +55,10 @@ const TabContent: React.FC = () => {
         // Function to fetch the list id and members for a specific list
         const fetchDataForList = async (list: string) => {
             try {
-                const data = await fetchListId(userId, list);
-                if (data.list_id) {
+                const listId = await getListId(userId, list);
+                if (listId) {
                     try {
-                        const membersIds = await fetchMembersId(data.list_id);
+                        const membersIds = await getMembersId(listId);
                         // If there is more than one member in the list, save members
                         if (membersIds.length > 1) {
                             listsMembers[list] = membersIds;

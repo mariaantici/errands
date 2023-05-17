@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
-import { getName } from '@/services/database/users';
-import { fetchListId, fetchMembersId } from '@/services/database/lists';
+import { getIdAndName } from '@/services/database/users';
+import { getListId, getMembersId } from '@/services/database/lists';
 import { createErrand } from '@/services/database/errands';
 import { Alert } from '@/components/common/Alert';
 import UserIdContext from "@/contexts/UserIdContext";
@@ -106,16 +106,16 @@ const AddErrandModal: React.FC<{ modalId: string, recommendedName?: string }> = 
         // Iterate through the lists
         for (const list of lists) {
             try {
-                // // Fetch list id for user
-                const data = await fetchListId(userId, list);
-                if (data.list_id) {
+                // Fetch list id for user
+                const listId = await getListId(userId, list);
+                if (listId) {
                     try {
                         // Fetch members for list id
-                        const membersIds = await fetchMembersId(data.list_id);
+                        const membersIds = await getMembersId(listId);
 
                         // If there is more than one member in the list (the user), fetch the names of members
                         if (membersIds.length > 1) {
-                            const names = await Promise.all(membersIds.map((member) => getName(member.user_id)));
+                            const names = await Promise.all(membersIds.map((member) => getIdAndName(member.user_id)));
 
                             // Save the names for the selected list
                             listsMemberNames[list] = names;
@@ -191,7 +191,7 @@ const AddErrandModal: React.FC<{ modalId: string, recommendedName?: string }> = 
                         <div className="space-y-1">
                             <label htmlFor="name" className="tracking-wide">Name</label>
                             <input
-                                id={modalId}
+                                id="name"
                                 className="input"
                                 placeholder="Name this errand like you mean it"
                                 value={formik.values.name}
@@ -206,7 +206,7 @@ const AddErrandModal: React.FC<{ modalId: string, recommendedName?: string }> = 
                         <div className="space-y-1 mb-2">
                             <label htmlFor="list" className="tracking-wide">Pick a list</label>
                             <select
-                                id={modalId}
+                                id="list"
                                 className="select"
                                 value={selectedlist}
                                 onChange={(e) => setSelectedList(e.target.value)}
@@ -218,7 +218,7 @@ const AddErrandModal: React.FC<{ modalId: string, recommendedName?: string }> = 
                         </div>
                         <div className="space-y-1">
                             <label htmlFor="date" className="tracking-wide">When</label>
-                            <div>
+                            <div id="date">
                                 <ReactDatePicker
                                     className="input"
                                     placeholder="Select a Date"
@@ -234,7 +234,7 @@ const AddErrandModal: React.FC<{ modalId: string, recommendedName?: string }> = 
                             <div className="space-y-1 mb-3">
                                 <label htmlFor="member" className="tracking-wide">Assign to</label>
                                 <select
-                                    id={modalId}
+                                    id="member"
                                     className="select"
                                     value={selectedMember}
                                     onChange={(e) => setSelectedMember(e.target.value)}

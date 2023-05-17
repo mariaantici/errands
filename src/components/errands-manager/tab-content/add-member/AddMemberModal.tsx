@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import * as Yup from 'yup';
 import { supabase } from "@/utils/supabaseClient";
 import { getIdForEmail } from "@/services/database/users";
-import { fetchListId, fetchMembersId } from "@/services/database/lists";
+import { getListId, getMembersId } from "@/services/database/lists";
 import { createRequest } from "@/services/database/member-requests";
 import { Alert } from '@/components/common/Alert';
 import UserIdContext from "@/contexts/UserIdContext";
@@ -41,13 +41,13 @@ const AddMemberModal: React.FC<{ isOpen?: boolean, setIsOpen: (open: boolean) =>
     // Function to fetch the id of the activeList and fetch the members for the list id
     const fetchListIdAndMembers = async () => {
         try {
-            const id = await fetchListId(userId, activeList);
-            setListId(id.list_id);
+            const list_id = await getListId(userId, activeList);
+            setListId(list_id);
 
-            if (id.list_id) {
+            if (list_id) {
                 try {
                     // Fetch members for list id
-                    const membersIds = await fetchMembersId(id.list_id);
+                    const membersIds = await getMembersId(list_id);
                     setMemberIds(membersIds);
 
                 } catch (error) {
