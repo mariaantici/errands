@@ -26,26 +26,26 @@ export async function createDefaultListsForUser(userId: string): Promise<void> {
     }
 }
 
-// Update list's id and set is owner to false
-export async function updateListId(userId: string, listId: string, listName: string): Promise<void> {
+// Create list for user
+export async function createList(listName: string, userId: string): Promise<void> {
     try {
         const { error } = await supabase
             .from('lists')
-            .update({ list_id: listId, is_owner: false })
-            .eq('user_id', userId)
-            .eq('list_name', listName);
+            .insert([
+                { list_name: listName, user_id: userId, is_owner: true },
+            ]);
 
         if (error) {
             throw error;
         }
     } catch (error) {
-        console.error('Error updating list id', error);
+        console.error('Error creating list for user', error);
         throw error;
     }
 }
 
-// Fetch list_id for user
-export async function fetchListId(userId: string, listName: string): Promise<{ list_id: string } | null> {
+// Get list_id for user list_name
+export async function getListId(userId: string, listName: string): Promise<string | null> {
     try {
         const { data, error } = await supabase
             .from('lists')
@@ -58,16 +58,16 @@ export async function fetchListId(userId: string, listName: string): Promise<{ l
             throw error;
         }
 
-        return data;
+        return data.list_id;
 
     } catch (error) {
-        console.error('Error fetching list id', error);
+        console.error('Error getiing list_id', error);
         throw error;
     }
 }
 
-// Fetch user ids for list
-export async function fetchMembersId(listId: string): Promise<{ user_id: string }[] | null> {
+// Get members ids for list
+export async function getMembersId(listId: string): Promise<{ user_id: string }[] | null> {
     try {
         const { data, error } = await supabase
             .from('lists')
@@ -81,17 +81,17 @@ export async function fetchMembersId(listId: string): Promise<{ user_id: string 
         return data;
 
     } catch (error) {
-        console.error('Error fetching members id', error);
+        console.error('Error getting members ids', error);
         throw error;
     }
 }
 
-// Check if user is owner of the list
-export async function isOwner(userId: string, listName: string): Promise<{ user_id: string, is_owner: boolean } | null> {
+// Get is_owner for user list_name
+export async function getIsOwner(userId: string, listName: string): Promise<boolean | null> {
     try {
         const { data, error } = await supabase
             .from('lists')
-            .select('user_id, is_owner')
+            .select('is_owner')
             .eq('user_id', userId)
             .eq('list_name', listName)
             .single();
@@ -100,10 +100,46 @@ export async function isOwner(userId: string, listName: string): Promise<{ user_
             throw error;
         }
 
-        return data;
+        return data.is_owner;
 
     } catch (error) {
-        console.error('Error checking if the user is owner', error);
+        console.error('Error getting the is_owner', error);
+        throw error;
+    }
+}
+
+// Update list_id and set is_owner to false
+export async function updateListId(userId: string, listId: string, listName: string): Promise<void> {
+    try {
+        const { error } = await supabase
+            .from('lists')
+            .update({ list_id: listId, is_owner: false })
+            .eq('user_id', userId)
+            .eq('list_name', listName);
+
+        if (error) {
+            throw error;
+        }
+    } catch (error) {
+        console.error('Error updating list_id and is_owner to false', error);
+        throw error;
+    }
+}
+
+// Update is_owner
+export async function updateIsOwner(userId: string, listName: string, value: boolean): Promise<void> {
+    try {
+        const { error } = await supabase
+            .from('lists')
+            .update({ is_owner: value })
+            .eq('user_id', userId)
+            .eq('list_name', listName);
+
+        if (error) {
+            throw error;
+        }
+    } catch (error) {
+        console.error('Error updating list is_owner value', error);
         throw error;
     }
 }
@@ -123,24 +159,6 @@ export async function deleteList(listName: string, userId: string): Promise<void
 
     } catch (error) {
         console.error('Error deleting list for user', error);
-        throw error;
-    }
-}
-
-// Create list for user
-export async function createList(listName: string, userId: string): Promise<void> {
-    try {
-        const { error } = await supabase
-            .from('lists')
-            .insert([
-                { list_name: listName, user_id: userId, is_owner: true },
-            ]);
-
-        if (error) {
-            throw error;
-        }
-    } catch (error) {
-        console.error('Error creating list for user', error);
         throw error;
     }
 }
