@@ -65,7 +65,7 @@ const AddMemberModal: React.FC<{ isOpen?: boolean, setIsOpen: (open: boolean) =>
     // Function to invite user using supabase email invite
     const unregisteredUserInvite = async (email: string) => {
         try {
-            const response = await fetch('.output/pages/api/inviteUser.ts', {
+            const response = await fetch('.output/api/inviteUser.ts', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
